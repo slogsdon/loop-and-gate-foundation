@@ -162,6 +162,7 @@ followed:
 | session-start | load memory cheaply | MEMORY.md, latest Daily + Reflection | today's Daily (creates if missing) |
 | capture | persist durable facts | MEMORY.md index | Knowledge/, MEMORY.md index line |
 | inbox-triage | route captured-elsewhere thoughts | vault/Inbox/, MEMORY.md index | Knowledge/ or Daily/ (human-confirmed), empties Inbox/ |
+| profile-interview | learn the user's voice + taste | user, one Q at a time | Profiles/voice-profile.md, Profiles/taste-profile.md |
 | reflect | close the session honestly | session context | Daily/, Reflections/, MEMORY.md goals |
 | improve | apply repeated signals | Reflections/, MEMORY.md | skills/, CLAUDE.md, MEMORY.md lessons, config.yaml |
 | loop | orchestrate subagent iterations | MEMORY.md + iteration results | git commits (verified iterations only) |

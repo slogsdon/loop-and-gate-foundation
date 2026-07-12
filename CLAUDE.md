@@ -33,6 +33,8 @@ Small single-step goals don't need it; just work them directly.
 - `vault/MEMORY.md` — the index. Always loaded, kept under ~40 lines.
 - `vault/Inbox/` — raw capture surface: unstructured thoughts dropped from
   Obsidian mobile, cleared by the `inbox-triage` skill.
+- `vault/Profiles/` — voice + taste reference docs (how the user writes and
+  judges), built by `profile-interview`, read by prose/design work.
 - `vault/Daily/` — episodic: one note per day, append-only session log.
 - `vault/Knowledge/` — semantic: one topic per note, edited in place.
 - `vault/Reflections/` — improvement signals: proposals live here until

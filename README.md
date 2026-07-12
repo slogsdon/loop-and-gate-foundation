@@ -46,6 +46,7 @@ procedure. This repo has four:
 | `session-start` | Loads memory at the start of a session (the index, the latest daily log, the latest reflection) |
 | `capture` | Saves a durable fact to the Knowledge folder and indexes it |
 | `inbox-triage` | Clears `vault/Inbox/` — the raw thoughts you dumped from your phone — sorting each into a fact, an idea, a task, or noise, with your confirmation |
+| `profile-interview` | Interviews you to build a voice profile (how you write) and a taste profile (how you judge), so the agent can sound like you and make calls you'd agree with |
 | `reflect` | Ends a session: logs what happened + writes a self-review with one lesson |
 | `improve` | Applies lessons that have come up repeatedly — by editing the skill files themselves |
 | `loop` | For bigger goals: your session becomes the orchestrator — it breaks the goal into tasks and dispatches a fresh subagent per iteration, verifying each result before it's committed |

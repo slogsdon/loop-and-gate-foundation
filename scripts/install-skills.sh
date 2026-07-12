@@ -10,7 +10,7 @@ repo="$(pwd)"
 
 mkdir -p .claude/skills
 
-for skill in session-start capture inbox-triage reflect improve loop; do
+for skill in session-start capture inbox-triage profile-interview reflect improve loop; do
   dst=".claude/skills/$skill"
   if [ -L "$dst" ] || [ -e "$dst" ]; then
     rm -rf "$dst"
