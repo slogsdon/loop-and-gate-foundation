@@ -88,7 +88,7 @@ Claude subscription or API key.
 npm install -g @anthropic-ai/claude-code
 
 # 2. Clone this repo
-git clone https://github.com/YOUR_USERNAME/second-brain-agent.git
+git clone https://github.com/slogsdon/second-brain-agent.git
 cd second-brain-agent
 
 # 3. Run setup — checks prerequisites, installs the skills
