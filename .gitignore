@@ -1,0 +1,6 @@
+.DS_Store
+vault/.obsidian/
+*.log
+
+# vault/MEMORY.md is a tracked template here (a global gitignore may exclude MEMORY.md)
+!vault/MEMORY.md

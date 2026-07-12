@@ -1,0 +1,18 @@
+# second-brain-agent settings
+# Edit freely — loop.sh and reflect.sh read this with simple grep, no YAML library needed.
+
+# Path to your Obsidian vault (the one in this repo by default).
+# Point this at a real Obsidian vault later if you want.
+vault: ./vault
+
+# Command used to run Claude. "claude" = Claude Code CLI.
+claude_cmd: claude
+
+# Max loop iterations per run (safety stop so the loop can't run away).
+max_iterations: 5
+
+# Model for the loop. Leave blank to use your Claude Code default.
+model:
+
+# Set to "true" once you trust the loop; "false" asks before each iteration.
+auto_continue: false
