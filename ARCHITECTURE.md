@@ -190,6 +190,8 @@ second-brain-agent/
 │                          #   guardrails — loaded by every session in this dir
 ├── config.yaml            # vault path (read by the SessionStart hook)
 ├── vault/                 # the Obsidian vault (open it in Obsidian directly)
+│   ├── Inbox/             # raw phone captures, cleared by inbox-triage
+│   ├── Profiles/          # voice + taste, built by profile-interview
 │   ├── Daily/             # episodic memory — append-only session log
 │   ├── Knowledge/         # semantic memory — one topic per note
 │   ├── Reflections/       # improvement signals — proposals live here
@@ -198,8 +200,9 @@ second-brain-agent/
 │   └── */SKILL.md
 ├── .claude/skills/        # symlinks → skills/ (created by install-skills.sh)
 └── scripts/
-    ├── setup.sh           # prereq checks, git init, first daily note
-    └── install-skills.sh  # symlink skills into .claude/skills/
+    ├── setup.sh                # prereq checks, git init, first daily note
+    ├── session-start-hook.sh   # injects working memory into every session
+    └── install-skills.sh       # symlink skills into .claude/skills/
 ```
 
 Skills are symlinked (not copied) into `.claude/skills/` so that when improve

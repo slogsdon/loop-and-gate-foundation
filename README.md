@@ -54,7 +54,7 @@ procedure. This repo's skills:
 **The loop** ties it together: one interactive Claude Code session = one
 iteration. Open Claude Code in this folder and the SessionStart hook loads
 memory while `CLAUDE.md` runs the protocol (load memory → work → save
-learnings → reflect). When you're done, exit; next time, a fresh session
+learnings → reflect). When you're done, exit. Next time, a fresh session
 picks up where the *files* left off. Only the memory files carry over between
 sessions — that's deliberate, it keeps the agent focused and reliable.
 
@@ -142,7 +142,7 @@ files say — you can run one iteration a day or ten in a row.
 
 For a goal too big for one session, ask for the **loop skill**
 ("run the loop on: <goal>"). Your session stays as the orchestrator and
-human gate; each iteration runs in a subagent with a fresh context, and
+human gate. Each iteration runs in a subagent with a fresh context, and
 nothing lands in memory until the orchestrator verifies it. Best of both:
 clean-slate iterations *and* you watching every step.
 
@@ -157,7 +157,7 @@ Sync, iCloud, or a plain `git pull` all work, since the inbox is just a file.
 Next session, ask the agent to **triage the inbox**. It reads each thought,
 sorts it into a fact, an idea, a task, or noise, and — this is the part that
 matters — shows you its sorting and waits for your yes before it files
-anything. You capture in two seconds at a red light; the agent does the filing
+anything. You capture in two seconds at a red light. The agent does the filing
 later, on your terms. Nothing gets filed you didn't approve, and nothing gets
 dropped you didn't see.
 
@@ -171,7 +171,7 @@ interviews you — one question at a time — about how you write and how you ju
 good work. It writes two reference docs into `vault/Profiles/`: a voice profile
 (so anything it drafts can sound like you) and a taste profile (so it has a
 standard to point at when it has to make a call you'd normally make yourself).
-Re-run it anytime to sharpen either one; it merges rather than overwrites.
+Re-run it anytime to sharpen either one. It merges rather than overwrites.
 
 ## The self-improvement part
 
@@ -191,7 +191,7 @@ commits so there's a diff:
 git show   # review what the agent changed about itself
 ```
 
-Why only repeated lessons? One bad session is noise; the same problem twice
+Why only repeated lessons? One bad session is noise. The same problem twice
 is a pattern. This gate is what separates self-improvement from an agent
 thrashing its own instructions. And why the git commit? So *you* stay in the
 review loop — every change the agent makes to itself is a diff you can read
@@ -204,7 +204,7 @@ sessions → better reflections → sharper instructions.
 
 - `config.yaml` → `vault` — point at a different vault (e.g. your
   real Obsidian vault) once you outgrow the starter one
-- `CLAUDE.md` — the agent's standing behavior rules; edit to taste (the
+- `CLAUDE.md` — the agent's standing behavior rules, edit to taste (the
   improve skill will also propose edits here over time)
 
 ## FAQ

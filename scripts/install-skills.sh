@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Symlinks the four skills into this project's .claude/skills/ so
+# Symlinks the skills into this project's .claude/skills/ so
 # Claude Code discovers them when run from the repo root.
 # Symlink (not copy) so the "improve" skill can edit skills in place
 # and the change is immediately live.
