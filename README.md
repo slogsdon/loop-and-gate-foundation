@@ -39,7 +39,7 @@ work fine without it.)
 files, run commands, and follow instruction files called **skills**.
 
 **A skill** is just a markdown file that teaches Claude a repeatable
-procedure. This repo has four:
+procedure. This repo's skills:
 
 | Skill | What it does |
 |-------|--------------|
@@ -65,6 +65,10 @@ enforces the same protocol even if you just run `claude` by hand.
 vault/
 ├── MEMORY.md        ← the index: who you are, active goals, lessons,
 │                      one line per knowledge note. Kept SHORT on purpose.
+├── Inbox/           ← raw thoughts you dump from your phone, cleared by
+│                      the inbox-triage skill (see "Capturing on the go")
+├── Profiles/        ← how you write + how you judge, built by
+│                      profile-interview (see "Teaching it your voice")
 ├── Daily/           ← one note per day: what happened in each session
 ├── Knowledge/       ← one note per topic: facts the agent has learned
 └── Reflections/     ← the agent's self-reviews and improvement proposals
@@ -138,6 +142,33 @@ For a goal too big for one session, ask for the **loop skill**
 human gate; each iteration runs in a subagent with a fresh context, and
 nothing lands in memory until the orchestrator verifies it. Best of both:
 clean-slate iterations *and* you watching every step.
+
+## Capturing on the go
+
+The best ideas don't wait until you're at your desk. This is where Obsidian's
+mobile app earns its keep — it's the same vault in your pocket. Drop a thought
+into `vault/Inbox/inbox.md` from your phone (one line, no structure) and it
+syncs back to your machine. The system doesn't care how it arrives: Obsidian
+Sync, iCloud, or a plain `git pull` all work, since the inbox is just a file.
+
+Next session, ask the agent to **triage the inbox**. It reads each thought,
+sorts it into a fact, an idea, a task, or noise, and — this is the part that
+matters — shows you its sorting and waits for your yes before it files
+anything. You capture in two seconds at a red light; the agent does the filing
+later, on your terms. Nothing gets filed you didn't approve, and nothing gets
+dropped you didn't see.
+
+No app to build, no server to run. Obsidian mobile plus Claude Code on your
+machine *is* the cross-platform setup.
+
+## Teaching it your voice
+
+Run **profile-interview** once ("build my voice profile") and the agent
+interviews you — one question at a time — about how you write and how you judge
+good work. It writes two reference docs into `vault/Profiles/`: a voice profile
+(so anything it drafts can sound like you) and a taste profile (so it has a
+standard to point at when it has to make a call you'd normally make yourself).
+Re-run it anytime to sharpen either one; it merges rather than overwrites.
 
 ## The self-improvement part
 
