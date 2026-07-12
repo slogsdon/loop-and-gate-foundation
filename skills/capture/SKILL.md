@@ -43,6 +43,6 @@ One job: move facts from this session's context into external memory
 - Facts in the note, one-liner in the index. Never paste note content into
   MEMORY.md — the index must stay small.
 - State facts timelessly ("the API limit is 100/min"), so notes don't rot
-  into stale narrative. When a fact changes, edit the note; git keeps history.
+  into stale narrative. When a fact changes, edit the note. Git keeps history.
 - Max 5 captures per session. More than that means you're logging, not
   capturing — be selective.

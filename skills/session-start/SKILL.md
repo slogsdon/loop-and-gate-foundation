@@ -39,7 +39,7 @@ fallback (hook not installed, or running outside Claude Code).
 
 ## Rules
 
-- This skill loads memory; it never writes Knowledge or Reflections.
+- This skill loads memory. It never writes Knowledge or Reflections.
 - Never re-read files the hook already injected — that's paying twice.
 - Total reading: MEMORY.md + 1 daily note + 1 reflection + at most 2-3
   Knowledge notes. If you're reading more than that, stop — you're burning

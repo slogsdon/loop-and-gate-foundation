@@ -13,7 +13,7 @@ A self-improving agent loop that uses an Obsidian vault as persistent memory.
 - **Self-improving** (the *system around* the model compounds) is buildable
   now: each session writes lessons to memory, skills sharpen as rules get
   added, the memory index accumulates verified facts. The model stays the
-  same; the environment it runs in gets sharper. (Karpathy calls the missing
+  same. The environment it runs in gets sharper. (Karpathy calls the missing
   weight-update mechanism "continual learning" and estimates it's years away;
   his proposed interim is exactly this — "system prompt learning," where the
   agent edits its own instructions.)
@@ -66,7 +66,7 @@ starting point for a beginner.
 
 ## Memory: what lives where
 
-Lilian Weng's taxonomy maps human memory onto agents; we implement all three
+Lilian Weng's taxonomy maps human memory onto agents. We implement all three
 tiers as plain markdown in an Obsidian vault:
 
 | Tier | Human analogue | Here | Written by |
@@ -80,14 +80,14 @@ tiers as plain markdown in an Obsidian vault:
 (`.claude/settings.json` → `scripts/session-start-hook.sh`) injects
 MEMORY.md + the latest daily note + the latest reflection into every
 session's context before the model does anything. A skill the model must
-remember to invoke can be skipped; a hook cannot. The session-start skill
+remember to invoke can be skipped. A hook cannot. The session-start skill
 remains for the protocol's judgment half (state goal + assumptions) and as
 manual fallback.
 
 Plus the piece that makes retrieval work:
 
 - **`vault/MEMORY.md`** — the index. One line per fact/goal/note. Loaded
-  every session; everything else loaded on demand. This is the
+  every session. Everything else loaded on demand. This is the
   "index + detail" pattern: the index stays under ~40 lines, detail notes
   hold the content. Practitioner consensus and Anthropic's own memory
   guidance both converge here — a small always-loaded index beats a big
@@ -98,7 +98,7 @@ architecture (it's how Claude Code's own memory works): human-readable,
 git-diffable, portable, zero infra, and Obsidian gives you a free UI with
 backlinks and graph view. Vector search earns its complexity when the corpus
 outgrows an index a model can scan — hundreds of notes, not dozens. Start
-here; MemPalace-style semantic search is a later bolt-on if ever needed.
+here. MemPalace-style semantic search is a later bolt-on if ever needed.
 
 **Schema rules that prevent memory rot** (the append-only trap):
 
@@ -108,7 +108,7 @@ here; MemPalace-style semantic search is a later bolt-on if ever needed.
   detection on write).
 - MEMORY.md sections have caps (10 standing lessons, ~40 lines total) with
   explicit demotion rules, so the index can't silently bloat.
-- The raw event stream (Daily/) is append-only and never edited; every
+- The raw event stream (Daily/) is append-only and never edited. Every
   index/summary is derived and rebuildable from it.
 
 ## How self-improvement actually works
@@ -125,8 +125,8 @@ Research discriminators between "self-improving" and "merely looping":
 2. **Write-back must be gated.** Voyager's ablation: remove self-verification
    and performance drops 73%. Unverified self-modification makes agents
    worse. Here the gate is the **two-strike rule**: reflect can only propose
-   (`status: proposed`); improve applies only signals that repeated across
-   2+ sessions. One bad session is noise; the same problem twice is a pattern.
+   (`status: proposed`). Improve applies only signals that repeated across
+   2+ sessions. One bad session is noise. The same problem twice is a pattern.
 
 3. **Improvements must be durable artifacts.** Applied changes land in skill
    files, MEMORY.md, or config — things every future session loads. That's
@@ -173,7 +173,7 @@ without giving up the human. It adds the verification the single-session
 mode can't: the orchestrator checks each iteration's pass/fail criteria and
 reverts unverified memory writes before they're committed (Voyager's
 lesson — unverified write-back is where loops stop compounding). Iterations
-run sequentially because they share memory files; only read-only research
+run sequentially because they share memory files. Only read-only research
 fans out in parallel.
 
 Guardrails encoded in the skills themselves: reflect never applies, improve
@@ -215,7 +215,7 @@ diff sits in one place.
   notes. Add when retrieval actually misses.
 - **Multi-agent orchestration** — one loop, one agent. Practitioner guidance:
   iterate deeper before scaling wider.
-- **Automated skill generation** — improve edits existing skills; it proposes
+- **Automated skill generation** — improve edits existing skills. It proposes
   new ones for a human to create. Self-authored skills without review is
   where self-modification goes wrong.
 - **YAML parser, task JSON, PRD tooling** — grep-able config and a goal

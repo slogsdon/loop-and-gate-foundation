@@ -40,7 +40,7 @@ Depth is the user's call: a **quick** pass (~15 questions, the essentials) or a
 
 ## Voice interview — the map
 
-Cover these; counts are for a full pass, scale down for quick.
+Cover these. Counts are for a full pass, scale down for quick.
 
 - **Beliefs & contrarian takes** (15) — what they believe that their field
   doesn't; hot takes they'd defend; conventional wisdom they think is wrong.

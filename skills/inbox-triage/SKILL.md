@@ -12,12 +12,12 @@ for the user.
 This is the async half of memory. The `capture` skill saves facts from *this
 session's* context. Triage handles thoughts you dumped from your phone hours
 ago, out of any session — the idea at a red light, the bug you noticed in the
-shower. Capture is synchronous; triage is the catch-up.
+shower. Capture is synchronous. Triage is the catch-up.
 
 ## The capture surface
 
 - `vault/Inbox/inbox.md` — one bullet (`- `) per thought. Append to it from
-  Obsidian mobile; no structure required at capture time.
+  Obsidian mobile. No structure required at capture time.
 - Any standalone `.md` file dropped in `vault/Inbox/` also counts as one item
   (mobile "new note").
 
@@ -33,7 +33,7 @@ Each bullet and each standalone file is one item to triage.
    - **task** — a concrete next action → `## Open` in today's daily note
    - **noise** — already stale or not worth keeping → discard
 3. **Show the whole batch as a list — item → proposed bucket — and wait for
-   the user to confirm or correct.** This is the gate. Triage sorts; the human
+   the user to confirm or correct.** This is the gate. Triage sorts. The human
    decides. Batch-approve is fine ("all good", "3 is a task not an idea").
 4. Apply the confirmed routing:
    - fact → follow the `capture` skill (dedupe against the Knowledge index,
@@ -55,7 +55,7 @@ Each bullet and each standalone file is one item to triage.
 - **Lose nothing unreviewed.** An item you genuinely can't classify stays in
   the inbox, flagged in your report — never discarded to make the inbox empty.
 - **Cheap beats thorough.** If triage costs more effort than the capture
-  saved, the loop dies. Keep the confirm step fast; batch it. Don't
+  saved, the loop dies. Keep the confirm step fast. Batch it. Don't
   interrogate the user item by item.
 - **Reflections are off-limits.** Feelings about the work go to `Reflections/`
   via the `reflect` skill, never through triage.

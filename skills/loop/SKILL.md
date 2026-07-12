@@ -26,7 +26,7 @@ fresh context.
 
 2. Break the goal into iteration-sized tasks: each completable by one agent
    in one run, with a pass/fail check you can state up front. Show the user
-   the task list; adjust if they object.
+   the task list. Adjust if they object.
 
 3. For each task, dispatch ONE subagent (general-purpose) with this brief:
 
@@ -44,7 +44,7 @@ fresh context.
    ```
 
    Run iterations SEQUENTIALLY — subagents write shared memory files
-   (daily note, MEMORY.md); parallel iterations corrupt them. Parallel is
+   (daily note, MEMORY.md). Parallel iterations corrupt them. Parallel is
    fine only for read-only research subagents that write nothing.
 
 4. Verify the iteration: check the task's pass/fail criteria yourself

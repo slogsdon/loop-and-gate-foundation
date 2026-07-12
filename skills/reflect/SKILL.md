@@ -47,7 +47,7 @@ or is written as vague praise, breaks the whole loop.
    ```
 
 3. **Update MEMORY.md active goals** — mark the goal done or update its
-   one-line status. Keep the section current; stale goals rot the index.
+   one-line status. Keep the section current. Stale goals rot the index.
 
 4. **Commit memory** — `git add vault/ && git commit -m "chore: memory update — <short summary>"`.
    Every session leaves an auditable trail.

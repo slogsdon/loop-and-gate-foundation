@@ -24,10 +24,10 @@ the model never changes, but the environment it runs in gets sharper.
 
 3. Apply accepted changes:
    - `skills/*/SKILL.md` → edit the skill. Add the rule where it belongs in
-     the existing structure; don't append a "lessons" dump at the bottom.
+     the existing structure. Don't append a "lessons" dump at the bottom.
      Keep each skill under ~80 lines — if a new rule won't fit, an old rule
      must be dropped or merged. Never change a skill's one job.
-   - `CLAUDE.md` → edit the standing behavior rules; never touch the
+   - `CLAUDE.md` → edit the standing behavior rules. Never touch the
      "Hard rules" section.
    - `vault/MEMORY.md` → add a one-line entry under `## Standing lessons`
      (max 10; if full, demote the least-relevant lesson back to its
@@ -44,7 +44,7 @@ the model never changes, but the environment it runs in gets sharper.
 
 ## Rules
 
-- Never apply a single-occurrence signal. One bad session is noise; the same
+- Never apply a single-occurrence signal. One bad session is noise. The same
   problem twice is a pattern. (This gate is what separates self-improvement
   from self-thrashing.)
 - Walk the user through each applied diff — improvement passes run
