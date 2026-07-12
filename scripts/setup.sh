@@ -50,5 +50,7 @@ fi
 ./scripts/install-skills.sh
 
 echo ""
-echo "Setup complete. Start your first session with:"
-echo "  ./agent/loop.sh \"your first goal here\""
+echo "Setup complete. Open Claude Code in this folder and give it a goal:"
+echo "  claude"
+echo "  (or open this folder in the Claude Code desktop app / your IDE)"
+echo "The SessionStart hook loads memory and CLAUDE.md runs the protocol."

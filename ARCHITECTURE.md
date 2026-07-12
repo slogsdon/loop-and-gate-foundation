@@ -22,9 +22,8 @@ A self-improving agent loop that uses an Obsidian vault as persistent memory.
 
 One **interactive Claude Code session = one iteration** (the "Ralph loop"
 pattern — Geoffrey Huntley / Ryan Carson / Addy Osmani — adapted to
-interactive use). `agent/loop.sh` just launches a session pre-seeded with
-the protocol; `CLAUDE.md` enforces the same protocol if you run `claude`
-bare:
+interactive use). Open Claude Code in this folder: the SessionStart hook
+loads memory and `CLAUDE.md` enforces the protocol — no launcher needed:
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -43,8 +42,8 @@ bare:
 └─────────────────────────────────────────────┘
          separately, run deliberately:
 ┌─────────────────────────────────────────────┐
-│ agent/reflect.sh → improve skill (also      │
-│ interactive): read Reflections/, apply      │
+│ ask for the improve pass → improve skill    │
+│ (also interactive): read Reflections/, apply│
 │ REPEATED signals as edits to skills /       │
 │ MEMORY.md / config / CLAUDE.md, walk the    │
 │ user through each diff, commit              │
@@ -145,7 +144,7 @@ The full signal path:
 session goes badly
   → reflect writes: lesson + proposed change (status: proposed)
   → next sessions hit the same issue → "REPEAT SIGNAL" noted
-  → user runs agent/reflect.sh
+  → user asks for the improve pass
   → improve skill: repeat? concrete target? → edit skill/MEMORY/config
   → status: applied, git commit
   → every future session runs with the sharper instruction
@@ -195,9 +194,7 @@ second-brain-agent/
 │   ├── Reflections/       # improvement signals — proposals live here
 │   └── MEMORY.md          # the always-loaded index
 ├── agent/
-│   ├── loop.sh            # launcher: interactive session seeded with the protocol
-│   ├── reflect.sh         # launcher: interactive improvement pass
-│   └── config.yaml        # vault path, claude command
+│   └── config.yaml        # vault path (read by the SessionStart hook)
 ├── skills/                # source of truth for the skills
 │   └── */SKILL.md
 ├── .claude/skills/        # symlinks → skills/ (created by install-skills.sh)

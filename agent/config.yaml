@@ -1,9 +1,7 @@
 # second-brain-agent settings
-# loop.sh and reflect.sh read this with grep — no YAML library needed.
+# Read by the SessionStart hook (scripts/session-start-hook.sh) with grep —
+# no YAML library needed.
 
 # Path to your Obsidian vault (the one in this repo by default).
 # Point this at a real Obsidian vault later if you want.
 vault: ./vault
-
-# Command used to launch Claude Code interactively.
-claude_cmd: claude

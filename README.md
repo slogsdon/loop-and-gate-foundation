@@ -52,12 +52,11 @@ procedure. This repo's skills:
 | `loop` | For bigger goals: your session becomes the orchestrator — it breaks the goal into tasks and dispatches a fresh subagent per iteration, verifying each result before it's committed |
 
 **The loop** ties it together: one interactive Claude Code session = one
-iteration. `agent/loop.sh` opens a session already primed with the protocol
-(load memory → work → save learnings → reflect). When you're done, exit;
-next time you run it, a fresh session picks up where the *files* left off.
-Only the memory files carry over between sessions — that's deliberate, it
-keeps the agent focused and reliable. A `CLAUDE.md` at the repo root
-enforces the same protocol even if you just run `claude` by hand.
+iteration. Open Claude Code in this folder and the SessionStart hook loads
+memory while `CLAUDE.md` runs the protocol (load memory → work → save
+learnings → reflect). When you're done, exit; next time, a fresh session
+picks up where the *files* left off. Only the memory files carry over between
+sessions — that's deliberate, it keeps the agent focused and reliable.
 
 ## The memory layout
 
@@ -102,12 +101,17 @@ agent's brain grow.
 
 ## Your first session
 
+Open Claude Code in this folder, then give it a goal:
+
 ```bash
-./agent/loop.sh "Get to know me: ask about my current project and preferences, then save what you learn"
+claude
+# then, in the session:
+# "Get to know me: ask about my current project and preferences, then save what you learn"
 ```
 
-This opens a normal interactive Claude Code session — you can talk to it,
-steer it, interrupt it. What happens:
+(Or open the folder in the Claude Code desktop app or your IDE — same result;
+the hook and `CLAUDE.md` do the priming.) It's a normal interactive session —
+you can talk to it, steer it, interrupt it. What happens:
 
 1. A session-start hook injects `vault/MEMORY.md` (nearly empty right now)
    plus the latest daily note and reflection — automatically, every session
@@ -122,16 +126,15 @@ in readable markdown. That transparency is the point.
 
 ## Daily use
 
-```bash
-# Give it a goal — any goal
-./agent/loop.sh "Research the best CRM options for a 3-person consultancy and write up a comparison"
+Open Claude Code in this folder (`claude`, the desktop app, or your IDE) and
+give it a goal — or none:
 
-# Or no goal — it picks up open items from the last daily note
-./agent/loop.sh
-
-# Or skip the script entirely — CLAUDE.md primes any session in this folder
-claude
 ```
+"Research the best CRM options for a 3-person consultancy and write up a comparison"
+```
+
+With no goal, it picks up open items from the last daily note. The
+SessionStart hook loads memory and `CLAUDE.md` runs the protocol either way.
 
 One session = one iteration of the loop. Work until done or blocked, let it
 reflect, exit. The next session starts fresh and continues from what the
@@ -172,16 +175,17 @@ Re-run it anytime to sharpen either one; it merges rather than overwrites.
 
 ## The self-improvement part
 
-After you've run a handful of sessions, run:
+After you've run a handful of sessions, start a session and ask for an
+improvement pass:
 
-```bash
-./agent/reflect.sh
+```
+"Run the improve pass: apply the reflections that have earned it."
 ```
 
-This opens an interactive session where the agent reads all the accumulated
-self-reviews and applies the lessons that have **come up more than once** —
-by editing the skill files, the memory index, or the config. It walks you
-through each change as it makes it, and commits so there's a diff:
+The agent reads all the accumulated self-reviews and applies the lessons that
+have **come up more than once** — by editing the skill files, the memory
+index, or the config. It walks you through each change as it makes it, and
+commits so there's a diff:
 
 ```bash
 git show   # review what the agent changed about itself

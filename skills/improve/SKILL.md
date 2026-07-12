@@ -1,6 +1,6 @@
 ---
 name: improve
-description: Apply accumulated self-improvement signals. Use when the user runs an improvement pass (agent/reflect.sh) or asks to "apply reflections" — reads Reflections/, applies changes that have earned it, updates standing lessons in MEMORY.md.
+description: Apply accumulated self-improvement signals. Use when the user asks to run an improvement pass or "apply reflections" — reads Reflections/, applies changes that have earned it, updates standing lessons in MEMORY.md.
 ---
 
 # Improve
