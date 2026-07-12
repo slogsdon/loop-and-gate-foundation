@@ -47,6 +47,7 @@ procedure. This repo has four:
 | `capture` | Saves a durable fact to the Knowledge folder and indexes it |
 | `reflect` | Ends a session: logs what happened + writes a self-review with one lesson |
 | `improve` | Applies lessons that have come up repeatedly — by editing the skill files themselves |
+| `loop` | For bigger goals: your session becomes the orchestrator — it breaks the goal into tasks and dispatches a fresh subagent per iteration, verifying each result before it's committed |
 
 **The loop** ties it together: one interactive Claude Code session = one
 iteration. `agent/loop.sh` opens a session already primed with the protocol
@@ -128,6 +129,12 @@ claude
 One session = one iteration of the loop. Work until done or blocked, let it
 reflect, exit. The next session starts fresh and continues from what the
 files say — you can run one iteration a day or ten in a row.
+
+For a goal too big for one session, ask for the **loop skill**
+("run the loop on: <goal>"). Your session stays as the orchestrator and
+human gate; each iteration runs in a subagent with a fresh context, and
+nothing lands in memory until the orchestrator verifies it. Best of both:
+clean-slate iterations *and* you watching every step.
 
 ## The self-improvement part
 

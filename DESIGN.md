@@ -153,7 +153,18 @@ followed:
 | session-start | load memory cheaply | MEMORY.md, latest Daily + Reflection | today's Daily (creates if missing) |
 | capture | persist durable facts | MEMORY.md index | Knowledge/, MEMORY.md index line |
 | reflect | close the session honestly | session context | Daily/, Reflections/, MEMORY.md goals |
-| improve | apply repeated signals | Reflections/, MEMORY.md | skills/, MEMORY.md lessons, config.yaml |
+| improve | apply repeated signals | Reflections/, MEMORY.md | skills/, CLAUDE.md, MEMORY.md lessons, config.yaml |
+| loop | orchestrate subagent iterations | MEMORY.md + iteration results | git commits (verified iterations only) |
+
+**The loop skill** is the scaled-up loop: the interactive session becomes
+orchestrator + human gate, and each iteration runs in a *subagent* with a
+fresh context — recovering the Ralph property (clean slate per iteration)
+without giving up the human. It adds the verification the single-session
+mode can't: the orchestrator checks each iteration's pass/fail criteria and
+reverts unverified memory writes before they're committed (Voyager's
+lesson — unverified write-back is where loops stop compounding). Iterations
+run sequentially because they share memory files; only read-only research
+fans out in parallel.
 
 Guardrails encoded in the skills themselves: reflect never applies, improve
 never acts on single occurrences, improve may not weaken its own gates, and

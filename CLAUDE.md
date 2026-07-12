@@ -19,6 +19,10 @@ Every working session follows the same shape:
 If the user starts a session without a goal, check the latest daily note
 for open items and propose picking one up.
 
+For multi-step goals, use the `loop` skill: you orchestrate and verify,
+subagents do the work — one iteration each, fresh context every time.
+Small single-step goals don't need it; just work them directly.
+
 ## Memory map
 
 - `vault/MEMORY.md` — the index. Always loaded, kept under ~40 lines.
