@@ -41,13 +41,16 @@ or is written as vague praise, breaks the whole loop.
    <a rule a future session could actually follow>
 
    ### Proposed change
-   - target: <skills/<name>/SKILL.md | vault/MEMORY.md | agent/config.yaml | none>
+   - target: <skills/<name>/SKILL.md | CLAUDE.md | vault/MEMORY.md | agent/config.yaml | none>
    - change: <one sentence describing the edit>
    - status: proposed
    ```
 
 3. **Update MEMORY.md active goals** — mark the goal done or update its
    one-line status. Keep the section current; stale goals rot the index.
+
+4. **Commit memory** — `git add vault/ && git commit -m "chore: memory update — <short summary>"`.
+   Every session leaves an auditable trail.
 
 ## Rules
 

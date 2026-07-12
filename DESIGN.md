@@ -20,29 +20,34 @@ A self-improving agent loop that uses an Obsidian vault as persistent memory.
 
 ## The agent loop, step by step
 
-`agent/loop.sh` runs this cycle (the "Ralph loop" pattern — Geoffrey
-Huntley / Ryan Carson / Addy Osmani):
+One **interactive Claude Code session = one iteration** (the "Ralph loop"
+pattern — Geoffrey Huntley / Ryan Carson / Addy Osmani — adapted to
+interactive use). `agent/loop.sh` just launches a session pre-seeded with
+the protocol; `CLAUDE.md` enforces the same protocol if you run `claude`
+bare:
 
 ```
 ┌─────────────────────────────────────────────┐
-│ 1. Fresh Claude session starts              │
+│ 1. Fresh interactive session starts         │
 │ 2. session-start skill: load memory         │
 │    (MEMORY.md + latest daily + reflection)  │
-│ 3. Work on the goal                         │
+│ 3. Work on the goal (user can steer —       │
+│    it's a normal Claude Code session)       │
 │ 4. capture skill: save durable facts        │
 │    to Knowledge/, index them in MEMORY.md   │
 │ 5. reflect skill: log session to Daily/,    │
-│    write lesson + proposal to Reflections/  │
-│ 6. git commit (audit trail)                 │
-│ 7. Context is DISCARDED — next iteration    │
-│    starts fresh at step 1                   │
+│    write lesson + proposal to Reflections/, │
+│    git commit (audit trail)                 │
+│ 6. User exits. Context is DISCARDED —       │
+│    next session starts fresh at step 1      │
 └─────────────────────────────────────────────┘
          separately, run deliberately:
 ┌─────────────────────────────────────────────┐
-│ agent/reflect.sh → improve skill:           │
-│ read Reflections/, apply REPEATED signals   │
-│ as edits to skills / MEMORY.md / config,    │
-│ commit the diff for human review            │
+│ agent/reflect.sh → improve skill (also      │
+│ interactive): read Reflections/, apply      │
+│ REPEATED signals as edits to skills /       │
+│ MEMORY.md / config / CLAUDE.md, walk the    │
+│ user through each diff, commit              │
 └─────────────────────────────────────────────┘
 ```
 
@@ -52,11 +57,13 @@ benchmark shows recall dropping from ~98% to ~64% well within the window
 sidesteps this: every iteration gets a clean window, and continuity lives in
 files. This is the single most important reliability decision in the design.
 
-**Why does the loop stop and ask?** `auto_continue: false` by default, plus
-`max_iterations`, plus BLOCKED/DONE sentinels. Karpathy's product guidance:
-an autonomy slider and "Iron Man suit, not Iron Man robot" — keep the human
-as the verification step until trust is earned. Flip `auto_continue` when it
-is.
+**Why interactive instead of headless (`claude -p`)?** Karpathy's product
+guidance: "Iron Man suit, not Iron Man robot" — keep the human in the
+session as the verification step. Interactive sessions mean you can steer
+mid-task, answer the agent's questions immediately, and watch it write
+memory. The loop's cadence is human-paced: run a session, exit, run another.
+Headless batch iteration is a later upgrade once trust is earned, not the
+starting point for a beginner.
 
 ## Memory: what lives where
 
@@ -158,15 +165,17 @@ skills stay under ~80 lines (a rule added must displace a rule dropped).
 second-brain-agent/
 ├── README.md              # beginner-facing intro + quickstart
 ├── DESIGN.md              # this file
+├── CLAUDE.md              # standing behavior: session protocol, memory map,
+│                          #   guardrails — loaded by every session in this dir
 ├── vault/                 # the Obsidian vault (open it in Obsidian directly)
 │   ├── Daily/             # episodic memory — append-only session log
 │   ├── Knowledge/         # semantic memory — one topic per note
 │   ├── Reflections/       # improvement signals — proposals live here
 │   └── MEMORY.md          # the always-loaded index
 ├── agent/
-│   ├── loop.sh            # the outer loop (fresh session per iteration)
-│   ├── reflect.sh         # the deliberate improvement pass
-│   └── config.yaml        # autonomy slider lives here
+│   ├── loop.sh            # launcher: interactive session seeded with the protocol
+│   ├── reflect.sh         # launcher: interactive improvement pass
+│   └── config.yaml        # vault path, claude command
 ├── skills/                # source of truth for the four skills
 │   └── */SKILL.md
 ├── .claude/skills/        # symlinks → skills/ (created by install-skills.sh)

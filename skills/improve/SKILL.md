@@ -27,6 +27,8 @@ the model never changes, but the environment it runs in gets sharper.
      the existing structure; don't append a "lessons" dump at the bottom.
      Keep each skill under ~80 lines — if a new rule won't fit, an old rule
      must be dropped or merged. Never change a skill's one job.
+   - `CLAUDE.md` → edit the standing behavior rules; never touch the
+     "Hard rules" section.
    - `vault/MEMORY.md` → add a one-line entry under `## Standing lessons`
      (max 10; if full, demote the least-relevant lesson back to its
      Reflections note).
@@ -34,16 +36,19 @@ the model never changes, but the environment it runs in gets sharper.
 
 4. Mark each applied proposal `status: applied` in its Reflections note.
 
-5. Report: what you applied, what you rejected, what you held — one line each.
+5. Commit everything:
+   `git add -A && git commit -m "feat: apply self-improvement — <summary>"`.
+   Self-modification without a reviewable diff is forbidden.
+
+6. Report: what you applied, what you rejected, what you held — one line each.
 
 ## Rules
 
 - Never apply a single-occurrence signal. One bad session is noise; the same
   problem twice is a pattern. (This gate is what separates self-improvement
   from self-thrashing.)
-- Every applied change must be committed by the caller (agent/reflect.sh does
-  this) so the human can review the diff. Self-modification without a
-  reviewable audit trail is forbidden.
+- Walk the user through each applied diff — improvement passes run
+  interactively so the human stays in the review loop.
 - Skills stay atomic: if a proposal would give a skill a second job, reject
   it and propose a new skill in your report instead.
 - Do not edit this skill (improve) to weaken its own gates.

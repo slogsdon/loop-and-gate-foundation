@@ -48,10 +48,13 @@ procedure. This repo has four:
 | `reflect` | Ends a session: logs what happened + writes a self-review with one lesson |
 | `improve` | Applies lessons that have come up repeatedly — by editing the skill files themselves |
 
-**The loop** (`agent/loop.sh`) ties it together: start a fresh Claude
-session → load memory → work → save learnings → reflect → repeat. Each
-iteration starts with a clean slate and *only* the memory files carry over —
-that's deliberate, it keeps the agent focused and reliable.
+**The loop** ties it together: one interactive Claude Code session = one
+iteration. `agent/loop.sh` opens a session already primed with the protocol
+(load memory → work → save learnings → reflect). When you're done, exit;
+next time you run it, a fresh session picks up where the *files* left off.
+Only the memory files carry over between sessions — that's deliberate, it
+keeps the agent focused and reliable. A `CLAUDE.md` at the repo root
+enforces the same protocol even if you just run `claude` by hand.
 
 ## The memory layout
 
@@ -96,14 +99,15 @@ agent's brain grow.
 ./agent/loop.sh "Get to know me: ask about my current project and preferences, then save what you learn"
 ```
 
-What happens:
+This opens a normal interactive Claude Code session — you can talk to it,
+steer it, interrupt it. What happens:
 
-1. Claude starts, loads `vault/MEMORY.md` (nearly empty right now)
+1. Claude loads `vault/MEMORY.md` (nearly empty right now)
 2. It asks you questions, and **captures** the answers into
    `vault/Knowledge/` notes
-3. It **reflects**: logs the session to `vault/Daily/` and writes its first
-   self-review to `vault/Reflections/`
-4. The loop asks whether to continue — say `n` for now
+3. When you wrap up, it **reflects**: logs the session to `vault/Daily/`,
+   writes its first self-review to `vault/Reflections/`, and commits
+4. Exit the session (Ctrl+D or /exit)
 
 Open the vault and look around. Everything the agent "knows" is right there
 in readable markdown. That transparency is the point.
@@ -116,10 +120,14 @@ in readable markdown. That transparency is the point.
 
 # Or no goal — it picks up open items from the last daily note
 ./agent/loop.sh
+
+# Or skip the script entirely — CLAUDE.md primes any session in this folder
+claude
 ```
 
-Each iteration ends with the agent either continuing, saying `DONE`, or
-saying `BLOCKED` (it needs something from you).
+One session = one iteration of the loop. Work until done or blocked, let it
+reflect, exit. The next session starts fresh and continues from what the
+files say — you can run one iteration a day or ten in a row.
 
 ## The self-improvement part
 
@@ -129,10 +137,10 @@ After you've run a handful of sessions, run:
 ./agent/reflect.sh
 ```
 
-This reads all the accumulated self-reviews and applies the lessons that
-have **come up more than once** — by editing the skill files, the memory
-index, or the config. Then it commits the change so you can see exactly what
-it did:
+This opens an interactive session where the agent reads all the accumulated
+self-reviews and applies the lessons that have **come up more than once** —
+by editing the skill files, the memory index, or the config. It walks you
+through each change as it makes it, and commits so there's a diff:
 
 ```bash
 git show   # review what the agent changed about itself
@@ -149,13 +157,10 @@ sessions → better reflections → sharper instructions.
 
 ## Dials you can turn
 
-`agent/config.yaml`:
-
-- `max_iterations` — how many loop cycles per run (default 5)
-- `auto_continue` — `false` asks you between iterations (default);
-  set `true` once you trust it to run unattended
-- `vault` — point at a different vault (e.g. your real Obsidian vault)
-  once you outgrow the starter one
+- `agent/config.yaml` → `vault` — point at a different vault (e.g. your
+  real Obsidian vault) once you outgrow the starter one
+- `CLAUDE.md` — the agent's standing behavior rules; edit to taste (the
+  improve skill will also propose edits here over time)
 
 ## FAQ
 
