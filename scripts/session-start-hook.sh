@@ -18,6 +18,9 @@ if [ ! -f "$daily" ]; then
   printf '# %s\n\n## Sessions\n' "$today" > "$daily"
 fi
 
+# MEMORY.md goes first ON PURPOSE: it's the top of the prompt-cache prefix.
+# Kept stable (read-only mid-session), Claude Code caches it — cheaper and
+# faster context loads. Don't reorder these sections.
 echo "=== WORKING MEMORY (injected by SessionStart hook) ==="
 echo ""
 echo "--- $VAULT/MEMORY.md ---"

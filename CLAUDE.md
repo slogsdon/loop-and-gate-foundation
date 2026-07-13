@@ -72,6 +72,12 @@ The first four are adapted from Karpathy's critique of default agent behavior
 
 ## Hard rules
 
+- **MEMORY.md is read-only during a session.** Never update it mid-session.
+  The hook injects it first so it sits at the top of the prompt-cache
+  prefix — a mid-session write invalidates that cache for the session.
+  All MEMORY.md writes happen at session end: reflect's close-out (goals +
+  queued index lines), or the improve skill as its final action, after all
+  other work is done.
 - Never edit `skills/improve/SKILL.md` to weaken its gates.
 - Never apply a proposed change outside an `improve` pass.
 - Never delete Daily or Reflections notes — they're the audit trail.

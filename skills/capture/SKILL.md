@@ -31,8 +31,9 @@ One job: move facts from this session's context into external memory
    ```
 
    One topic per note. If you're writing about two topics, make two notes.
-4. Add/update the one-line index entry in `MEMORY.md` under
-   `## Knowledge index`:
+4. Queue the one-line index entry for `MEMORY.md`'s `## Knowledge index` —
+   do NOT edit MEMORY.md now (it's read-only mid-session for prompt-cache
+   stability, see CLAUDE.md hard rules). Reflect adds it at session close:
 
    ```markdown
    - [<Topic>](Knowledge/<topic-slug>.md) — <what question this note answers>

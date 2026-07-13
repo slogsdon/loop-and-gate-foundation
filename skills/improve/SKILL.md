@@ -49,6 +49,10 @@ the model never changes, but the environment it runs in gets sharper.
   from self-thrashing.)
 - Walk the user through each applied diff — improvement passes run
   interactively so the human stays in the review loop.
+- MEMORY.md updates come LAST — after all skill/CLAUDE.md/config edits,
+  immediately before the commit. MEMORY.md is the session's prompt-cache
+  prefix (injected first by the hook); writing it mid-session invalidates
+  the cache, raising cost and slowing context load.
 - Skills stay atomic: if a proposal would give a skill a second job, reject
   it and propose a new skill in your report instead.
 - Do not edit this skill (improve) to weaken its own gates.

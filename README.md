@@ -78,6 +78,20 @@ happened), **semantic** (Knowledge — what's true), and the current session's
 context window (working memory, discarded every iteration). The index keeps
 it all findable without loading everything.
 
+## Prompt caching (why MEMORY.md only changes at session end)
+
+`MEMORY.md` is the most-read file in the system — the hook injects it at the
+very top of every session. Claude Code automatically caches that stable
+prefix, so as long as the file doesn't change mid-session, every message in
+the session reloads it from cache: cheaper and faster.
+
+That's why the system enforces one rule everywhere: **MEMORY.md is read at
+session start and written once at session end** (when the agent reflects, or
+when an improvement pass finishes). Facts captured mid-session go into
+`Knowledge/` notes immediately; their index lines wait for the close-out.
+One write per session = maximum cache hits = lower cost and faster sessions
+over time.
+
 ## Setup (5 minutes)
 
 You need: a Mac or Linux machine, [Node.js](https://nodejs.org), and a

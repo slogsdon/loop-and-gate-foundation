@@ -12,6 +12,11 @@ memory automatically — look for a `=== WORKING MEMORY ===` block in your
 context. If it's there, skip straight to step 6. Steps 1-5 are the manual
 fallback (hook not installed, or running outside Claude Code).
 
+The hook injects MEMORY.md FIRST on purpose: it sits at the top of the
+prompt-cache prefix, so Claude Code caches it across the session. Changing
+MEMORY.md after the hook fires defeats this — it stays read-only until
+session end (see CLAUDE.md hard rules).
+
 ## Steps
 
 1. Read `vault/MEMORY.md` in full. This is the index — who you work for,
