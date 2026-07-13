@@ -66,20 +66,23 @@ Open the folder in Finder (or install [Obsidian](https://obsidian.md) and "Open
 folder as vault" on the `vault/` folder) and you can read everything the agent
 knows — it's all plain, readable notes. That transparency is the point.
 
-## Capturing on the go
+## Capturing on the go — power move
 
-Once you're comfortable, install the **Obsidian** mobile app on your phone and
-point it at the same `vault/` folder. Then a thought at a red light goes into
-`vault/Inbox/` from your phone, and next session you ask the agent to "triage the
-inbox" — it sorts each note and files it with your OK. That's how the ideas survive
-until you're back at the desk.
+Once you're comfortable, level it up: install the **Obsidian** mobile app on your
+phone and point it at the same `vault/` folder. Then a thought at a red light goes
+into `vault/Inbox/` from your phone, and next session you ask the agent to "triage
+the inbox" — it sorts each note and files it with your OK. That's how the ideas
+survive until you're back at the desk. This is where the whole thing starts to feel
+like a second brain that's always with you.
 
 ## Notes and limits
 
 - **Mac works out of the box.** On **Windows**, the memory-loader is a small script
   that needs **Git** installed (the Desktop app prompts you for it in Step 2). If
   memory isn't loading on Windows, that's the thing to check.
-- If you ever do want version history of your memory (every change tracked and
-  undoable), that part uses `git` and lives in the terminal path — see the README.
+- **Power move (optional).** Want every memory change tracked and reversible, like
+  a time machine for what the agent knows? Put the folder under `git`. That's the
+  terminal path in the README. You don't need it to start, and it's a satisfying
+  upgrade once the agent is a real part of your day.
 - This no-terminal path is new and being validated with first users. If a step
   doesn't match what you see, that's useful feedback.

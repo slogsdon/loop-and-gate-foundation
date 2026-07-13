@@ -116,7 +116,9 @@ cd second-brain-agent
 ```
 
 The skills already live in `.claude/skills/` and load when you open the folder,
-so `setup.sh` is optional — run it only if you want git history of your memory.
+so `setup.sh` isn't required. **Power move:** run it to put your memory under
+`git` — every change the agent makes to what it knows becomes tracked and
+reversible, a full history of how your second brain grew.
 
 Optional but nice: install [Obsidian](https://obsidian.md), then
 "Open folder as vault" → pick the `vault/` folder. Now you can watch the

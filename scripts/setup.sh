@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# OPTIONAL setup (terminal only): git-init the vault for version history + a
-# prereq check. The kit works without this — skills live in .claude/skills/ and
-# the SessionStart hook seeds today's note, so opening the folder in Claude Code
-# is enough. Run this only if you want git history of your memory.
+# POWER MOVE (terminal only): git-init the vault so every memory change is tracked
+# and reversible + a prereq check. The kit works without this — skills live in
+# .claude/skills/ and the SessionStart hook seeds today's note, so opening the
+# folder in Claude Code is enough. Run this when you want a full history of how
+# your second brain grew.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
