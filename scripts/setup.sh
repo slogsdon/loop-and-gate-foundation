@@ -1,58 +1,50 @@
 #!/usr/bin/env bash
-# POWER MOVE (terminal only): git-init the vault so every memory change is tracked
-# and reversible + a prereq check. The kit works without this — skills live in
-# .claude/skills/ and the SessionStart hook seeds today's note, so opening the
-# folder in Claude Code is enough. Run this when you want a full history of how
-# your second brain grew.
+# One-time setup for second-brain-agent (Loop & Gate Foundation).
+# Picks a home for your vault, scaffolds it, and records the path so the
+# SessionStart hook knows where your memory lives — in both clone and
+# plugin installs. Safe to re-run: never overwrites files you've started.
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+CONFIG_DIR="$HOME/.config/loop-and-gate"
+CONFIG_FILE="$CONFIG_DIR/vault"
 
-echo "== second-brain-agent setup =="
+echo "== second-brain-agent — setup =="
 
-# 1. Check for Claude Code CLI
-if ! command -v claude >/dev/null 2>&1; then
-  echo "MISSING: Claude Code CLI not found."
-  echo "  Install: npm install -g @anthropic-ai/claude-code"
-  echo "  Then run this script again."
-  exit 1
-fi
-echo "ok: claude CLI found ($(claude --version 2>/dev/null | head -1))"
-
-# 2. Check git
-if ! command -v git >/dev/null 2>&1; then
-  echo "MISSING: git. Install Xcode command line tools or git package."
-  exit 1
-fi
-echo "ok: git found"
-
-# 3. Initialize vault git tracking (memory history = git history)
-if [ ! -d .git ]; then
-  git init -b main
-  echo "ok: git repo initialized"
+# 1. Choose a vault home. Priority: arg > env > iCloud (macOS) > ~/second-brain.
+icloud="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents"
+if [ -n "${1:-}" ]; then
+  VAULT="$1"
+elif [ -n "${LOOP_GATE_VAULT:-}" ]; then
+  VAULT="$LOOP_GATE_VAULT"
+elif [ -d "$icloud" ]; then
+  VAULT="$icloud/SecondBrain"
+  echo "Found the Obsidian iCloud folder — using $VAULT"
+  echo "On macOS/iOS/iPadOS this syncs your vault to Obsidian mobile for free:"
+  echo "edit memory on your phone or iPad, the agent reads the same files."
 else
-  echo "ok: already a git repo"
+  VAULT="$HOME/second-brain"
+fi
+echo "Vault home: $VAULT"
+
+# 2. Scaffold (idempotent).
+for dir in Daily Reflections Knowledge Inbox Profiles; do mkdir -p "$VAULT/$dir"; done
+[ -f "$VAULT/MEMORY.md" ] || printf '# Memory\n\n## Index\n' > "$VAULT/MEMORY.md"
+for p in voice taste; do
+  f="$VAULT/Profiles/$p.md"
+  [ -f "$f" ] || printf '# %s profile\n\n_Run /profile-interview to fill this in._\n' "$p" > "$f"
+done
+
+# 3. Record the path where the SessionStart hook reads it (takes precedence over config.yaml).
+mkdir -p "$CONFIG_DIR"
+printf '%s\n' "$VAULT" > "$CONFIG_FILE"
+echo "Recorded vault path in $CONFIG_FILE"
+
+# 4. Optional power move: git-track the vault so every memory change is reversible.
+if command -v git >/dev/null 2>&1 && [ ! -d "$VAULT/.git" ]; then
+  echo
+  echo "Optional — track memory history with git:"
+  echo "  git -C \"$VAULT\" init -b main && git -C \"$VAULT\" add -A && git -C \"$VAULT\" commit -m 'init vault'"
 fi
 
-# 4. Seed today's daily note so the first session has somewhere to log
-today=$(date +%Y-%m-%d)
-daily="vault/Daily/$today.md"
-if [ ! -f "$daily" ]; then
-  cat > "$daily" <<EOF
-# $today
-
-## Sessions
-
-(sessions will be logged here by the loop)
-EOF
-  echo "ok: created $daily"
-else
-  echo "ok: $daily already exists"
-fi
-
-echo ""
-echo "Setup complete. Open Claude Code in this folder and give it a goal:"
-echo "  claude"
-echo "  (or open this folder in the Claude Code desktop app / your IDE)"
-echo "Skills are in .claude/skills/ (already discovered); the SessionStart hook"
-echo "loads memory and CLAUDE.md runs the protocol."
+echo
+echo "Done. Enable the plugin (or open this folder in Claude Code), then run /morning."
