@@ -208,7 +208,75 @@ later, on your terms. Nothing gets filed you didn't approve, and nothing gets
 dropped you didn't see.
 
 No app to build, no server to run. Obsidian mobile plus Claude Code on your
-machine *is* the cross-platform setup.
+machine covers quick capture — but you're not limited to capture on the go.
+Running full sessions from your phone or tablet is the next section.
+
+## Working across devices
+
+Quick capture from your phone is the lightweight path. The full version: **run
+real Claude Code sessions from any device** — phone, tablet, desktop — all
+against the same vault. Two Claude Code features make it work, and the vault
+syncs underneath them.
+
+**Remote Control** lets a session running on your desktop be driven from any
+other Claude app — the web app, the mobile app, your tablet. It's off by
+default; turn it on once so it's the default for every session:
+
+```bash
+claude --remote-control        # just this session
+# make it permanent in settings.json:
+#   "remoteControlAtStartup": true
+# or in the Claude Code desktop app:
+#   Settings → Claude Code → enable remote control by default
+```
+
+Now you can start a session at your desk and keep steering it from the couch —
+same session, same vault, same skills.
+
+**Dispatch** is the other half, for starting work when you're away from the
+machine. From the Claude mobile app (Cowork tab), hand it a task; it spins up a
+Code session on your desktop and pushes you a notification when it's done or
+needs a decision. You delegate from your phone, the work runs where your files
+live — even from the beach.
+
+The point of both: the session always runs on the machine that holds your
+vault, so your memory and skills are available anywhere without copying
+anything around.
+
+### Syncing the vault underneath
+
+Sessions run on your desktop; the *vault* has to reach your other devices so
+Obsidian — and any quick capture — sees the same files.
+
+- **macOS + iOS/iPadOS:** iCloud, which `setup.sh` picks by default. One gotcha
+  for larger vaults — tell iCloud Drive to **keep the Obsidian folder
+  downloaded** on each device (phone, tablet, desktop). Otherwise iCloud
+  offloads it and you hit long sync delays and re-indexing when you open it.
+- **Android or Windows:** iCloud isn't an option. Use **Obsidian Sync** (paid,
+  turnkey), the community **git plugin** (free, occasionally flaky), or a
+  Dropbox / OneDrive folder. The vault is just files — anything that syncs a
+  folder works.
+
+**Mind the sync delay.** Sync isn't instant. Jot a note on your phone, then
+immediately ask a desktop session to read it, and it may report the note
+missing (brand-new) or stale (not synced yet). That's lag, not data loss — give
+it a few seconds. Editing a note on mobile while a desktop session writes to it
+is generally fine; if you want to be safe, finish on one device before you pick
+it up on another.
+
+### Running more than one session at once
+
+If you keep more than one session going, git is what stops them clobbering each
+other — two sessions committing to the same repo can bury one's changes under
+the other's. The clean fix is to **run each session in its own git worktree**,
+so each works on an isolated copy and merges deliberately. The catch:
+**delete worktrees when you're done**, or duplicate copies of your work quietly
+eat disk. Keep commits and pushes to your backup remote on **one machine** (the
+desktop) so history has a single writer.
+
+**This applies to every kit, not just the Foundation.** The Build, Grow, and
+Accountability kits all read and write the same vault, so the same sync and
+worktree discipline covers them — there's nothing kit-specific to learn.
 
 ## Teaching it your voice
 
