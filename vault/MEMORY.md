@@ -18,8 +18,9 @@
 <!-- The reflect skill promotes repeated lessons from Reflections/ to here.
      Max 10. Oldest/least-used get demoted back to a Reflections note. -->
 
-- Audit the existing surface (repo files + the user's published work) before
-  generating a new artifact, not after — prevents duplicate/near-duplicate output.
+- Read the whole surface (full file — not a grep line — sibling files, the
+  user's own published work) before asserting a gap/defect or generating a new
+  artifact — prevents both duplicate output and false-positive findings.
 
 ## Knowledge index
 
@@ -28,3 +29,4 @@
 - [Example — What this vault is](Knowledge/example-what-this-vault-is.md) — how the agent uses these folders
 - [Loop & Gate — launch strategy](Knowledge/launch-strategy.md) — where/when/how to launch; free-now-paid-later; feedback gate before wide launch; paid-tier menu
 - [Loop & Gate — launch assets](Knowledge/launch-assets.md) — demo shot-list + install-tutorial outline
+- [Loop & Gate — attribution map](Knowledge/launch-attribution.md) — who the launch credits + upstreams; no-vendoring = no license obligation
