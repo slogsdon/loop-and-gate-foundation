@@ -9,17 +9,6 @@
           }
         ]
       }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/scripts/gate-hook.sh"
-          }
-        ]
-      }
     ]
   }
 }

@@ -2,9 +2,6 @@
   "hooks": {
     "SessionStart": [
       { "hooks": [ { "type": "command", "command": "${CLAUDE_PLUGIN_ROOT}/scripts/session-start-hook.sh" } ] }
-    ],
-    "PreToolUse": [
-      { "matcher": "Edit|Write|MultiEdit", "hooks": [ { "type": "command", "command": "${CLAUDE_PLUGIN_ROOT}/scripts/gate-hook.sh" } ] }
     ]
   }
 }
