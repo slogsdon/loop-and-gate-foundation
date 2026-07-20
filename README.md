@@ -129,16 +129,19 @@ npm install -g @anthropic-ai/claude-code
 # 2. Clone this repo
 git clone https://github.com/slogsdon/loop-and-gate-foundation.git
 cd loop-and-gate-foundation
-
-# 3. Pick where your vault lives (iCloud on Mac = free mobile sync) + scaffold it
-./scripts/setup.sh
 ```
 
-`setup.sh` chooses a home for your vault, scaffolds it, and records the path so
-the memory hook can find it. On macOS it defaults to your Obsidian iCloud
-folder, so the same vault syncs to Obsidian on iPhone and iPad for free — capture
-to `Inbox/` from your phone and the agent triages it next session. Pass a path
-(`./scripts/setup.sh ~/my-vault`) to put it elsewhere.
+Then open Claude Code (`claude`) and run the **`setup` skill** — just ask
+*"set up my vault"* (or `/setup`). It asks where your vault should live
+(recommending your Obsidian iCloud folder on macOS, so the same vault syncs to
+Obsidian on iPhone and iPad for free), scaffolds it, and records the path so the
+memory hook finds it every session. `/setup` is the front door on both the clone
+and plugin paths — one thing to learn.
+
+**Advanced / non-interactive:** run the underlying script directly,
+`./scripts/setup.sh ~/my-vault`, e.g. from dotfiles or CI. Without a path it
+auto-picks a location (iCloud on macOS, else `~/second-brain`) rather than
+asking — pass the path to stay in control.
 
 **Power move:** git-init the vault (setup prints the command) so every change the
 agent makes to what it knows becomes tracked and reversible.

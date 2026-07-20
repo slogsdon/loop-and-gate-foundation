@@ -49,12 +49,13 @@ the skills and the memory-loader are now available in every session.
 Open a folder to work in (**File → Open folder** — your Documents is fine), then in
 the chat, ask the agent to set up where your memory lives:
 
-> Run the Foundation setup script to place my vault.
+> Set up my vault.
 
-This creates your **vault** — the folder of notes that is the agent's memory. On a
-Mac it places the vault in iCloud, so the *same* notes sync to Obsidian on your
-iPhone and iPad for free (that's what makes "capturing on the go" below work). You
-only do this once.
+This runs the **setup skill**, which asks you where the vault should live and
+then creates it — the folder of notes that is the agent's memory. On a Mac it
+recommends iCloud, so the *same* notes sync to Obsidian on your iPhone and iPad
+for free (that's what makes "capturing on the go" below work). You only do this
+once.
 
 ## Step 5 — your first session
 
