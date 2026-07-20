@@ -47,4 +47,6 @@ if command -v git >/dev/null 2>&1 && [ ! -d "$VAULT/.git" ]; then
 fi
 
 echo
-echo "Done. Enable the plugin (or open this folder in Claude Code), then run /morning."
+echo "Done. Enable the plugin (or open this folder in Claude Code) and start your"
+echo "first session — try: \"Get to know me: ask about my project and preferences,"
+echo "then save what you learn.\""

@@ -12,6 +12,18 @@ assumes you're starting from zero.
 > a download-and-click path using the Claude desktop app, no terminal at all.
 > The setup below is the terminal (`git clone`) path for people who prefer it.
 
+## What this is / what it's not
+
+**It is** a memory-and-self-improvement layer for [Claude Code](https://claude.com/claude-code),
+stored as plain markdown in an Obsidian vault. You run normal interactive
+sessions; it captures facts, writes an honest self-review each time, and edits
+its own skills from lessons that repeat.
+
+**It is not** a model or a fine-tune (the weights never change — the files
+around the model do), a hosted service or database to stand up (no server, no
+vector DB — just files and two shell scripts), or a prompt library you paste
+from (it runs the loop for you).
+
 ## The problem this solves
 
 Every AI chat session starts from a blank slate. You explain your project,
@@ -96,9 +108,13 @@ when an improvement pass finishes). Facts captured mid-session go into
 One write per session = maximum cache hits = lower cost and faster sessions
 over time.
 
-## Setup — terminal path (5 minutes)
+## Install
 
-*(No terminal? Use [GETTING-STARTED.md](GETTING-STARTED.md) instead.)*
+Two ways in: **clone** for the full self-improving loop (the skills are your
+working copy, so `improve` can edit them), or install as a **plugin** to run it
+everywhere. *(No terminal at all? Use [GETTING-STARTED.md](GETTING-STARTED.md).)*
+
+### Clone — terminal path (5 minutes)
 
 You need: a Mac or Linux machine, [Node.js](https://nodejs.org), and a
 Claude subscription or API key.
@@ -336,6 +352,16 @@ repeated signals, no gate-weakening, everything committed for your review),
 and `git revert` undoes any bad edit.
 
 **Do I need Obsidian?** No — it's a viewer. The system is just files.
+
+## Contributing
+
+Issues and pull requests are welcome. Start with
+[CONTRIBUTING.md](CONTRIBUTING.md) — it covers how to report bugs, how to
+propose skill or hook changes, and the PR conventions. One thing worth knowing
+up front: the `improve` gate (only repeated lessons, everything committed for
+review, no self-weakening) is load-bearing by design, so PRs that weaken it will
+be declined. See also the [Code of Conduct](CODE_OF_CONDUCT.md) and the
+[security policy](.github/SECURITY.md).
 
 ## Going deeper
 
