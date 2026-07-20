@@ -31,3 +31,4 @@
 - [Loop & Gate — launch assets](Knowledge/launch-assets.md) — demo shot-list + install-tutorial outline
 - [Loop & Gate — attribution map](Knowledge/launch-attribution.md) — who the launch credits + upstreams; no-vendoring = no license obligation
 - [Claude Code self-edit gating & plugin cache](Knowledge/claude-code-self-edit-gating.md) — why a self-edit gate is redundant in default mode + where plugin skills resolve
+- [ClaudePluginHub — listing scoring](Knowledge/claudepluginhub-listing.md) — how to raise a plugin's hub score: community-profile files, Install/Usage sections, ownership claim + badge markdown
