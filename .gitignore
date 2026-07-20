@@ -1,6 +1,11 @@
 .DS_Store
-vault/.obsidian/
 *.log
 
-# vault/MEMORY.md is a tracked template here (a global gitignore may exclude MEMORY.md)
-!vault/MEMORY.md
+# The live vault lives OUTSIDE the repo — created by the `setup` skill and
+# resolved via ~/.config/loop-and-gate/vault (see CLAUDE.md → "Resolving the
+# vault path"). Never track a real vault here.
+vault/
+
+# vault.example/ IS tracked (the committed example of the structure). A global
+# gitignore may exclude MEMORY.md, so force-track the example's copy.
+!vault.example/MEMORY.md

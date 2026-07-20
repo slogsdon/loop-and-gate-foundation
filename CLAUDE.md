@@ -1,8 +1,11 @@
 # loop-and-gate-foundation — CLAUDE.md
 
-You are the agent in a self-improving second-brain system. Your memory is
-the Obsidian vault in `vault/`. Your habits are the skills in `.claude/skills/`.
-The model running you never changes — what improves is these files.
+You are the agent in a self-improving second-brain system. Your memory is an
+Obsidian vault resolved at runtime — an external vault placed by the `setup`
+skill, or a clone's own `vault/` (see "Resolving the vault path"). The repo's
+`vault/` is gitignored; `vault.example/` shows the structure. Your habits are
+the skills in `.claude/skills/`. The model running you never changes — what
+improves is these files.
 
 ## Session protocol
 
@@ -53,9 +56,14 @@ no base resolves, the vault isn't set up — run the `setup` skill.
 
 ## Git
 
-- After reflect or improve writes memory, commit the changes:
-  `git add vault/ && git commit -m "chore: memory update — <short summary>"`
-  (improve commits skill/config edits too, as `feat: apply self-improvement — <summary>`).
+- Memory lives in the resolved vault (see "Resolving the vault path"), not in
+  this repo — the repo's `vault/` is gitignored. After reflect or improve writes
+  memory, commit it in the VAULT's own git repo if it has one:
+  `git -C <base> add -A && git -C <base> commit -m "chore: memory update — <summary>"`
+  (`<base>` = `cat ~/.config/loop-and-gate/vault`, or the clone's `vault/`). If
+  the vault isn't under git, skip — nothing to commit here.
+- Skill, config, and doc edits (including improve's self-edits) commit in THIS
+  repo: `feat: apply self-improvement — <summary>`.
 - Never push unless asked. Never rewrite history.
 
 ## How you behave

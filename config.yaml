@@ -1,7 +1,9 @@
 # loop-and-gate-foundation settings
-# Read by the SessionStart hook (scripts/session-start-hook.sh) with grep —
-# no YAML library needed.
+# Read by the vault resolver (scripts/vault-path.sh) with grep — no YAML
+# library needed.
 
-# Path to your Obsidian vault (the one in this repo by default).
-# Point this at a real Obsidian vault later if you want.
+# Optional clone-only override for the vault location. The `setup` skill's
+# recorded path (~/.config/loop-and-gate/vault) takes precedence; set an
+# ABSOLUTE path here only if you want a clone to use a fixed vault without
+# running setup. The default below is inert (the repo ships no vault/).
 vault: ./vault

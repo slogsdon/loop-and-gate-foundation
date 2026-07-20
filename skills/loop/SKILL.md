@@ -48,9 +48,12 @@ fresh context.
    fine only for read-only research subagents that write nothing.
 
 4. Verify the iteration: check the task's pass/fail criteria yourself
-   (read the output, run the check, inspect `git diff` of the vault).
-   - Pass → commit: `git add -A && git commit -m "chore: loop iteration — <task>"`
-   - Fail → `git checkout -- vault/` to discard its memory writes, then
+   (read the output, run the check, inspect `git -C <base> diff` of the vault —
+   `<base>` = `cat ~/.config/loop-and-gate/vault`, or the clone's `vault/`).
+   - Pass → commit memory in the vault's git if it has one:
+     `git -C <base> add -A && git -C <base> commit -m "chore: loop iteration — <task>"`.
+     Any repo code/skill changes commit separately in this repo.
+   - Fail → `git -C <base> checkout -- .` to discard its memory writes, then
      re-dispatch once with your feedback appended to the brief. Two fails →
      stop and ask the user.
 

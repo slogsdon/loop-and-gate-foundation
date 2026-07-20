@@ -18,14 +18,23 @@ if [ -f "$recorded" ]; then
   exit 0
 fi
 
-# No recorded path. Allow the repo's ./vault ONLY for a clone — detect a plugin
-# install by this script's own location and refuse to adopt its bundled vault.
+# No recorded path. Fall back ONLY for a clone — detect a plugin install by this
+# script's own location and refuse to adopt its bundled vault.
 case "$0" in
-  */plugins/cache/*) : ;;  # plugin install: no ./vault fallback, force setup
+  */plugins/cache/*) : ;;  # plugin install: no local fallback, force setup
   *)
-    repo_vault="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)/vault"
-    if [ -f "$repo_vault/MEMORY.md" ]; then
-      printf '%s\n' "$repo_vault"
+    base_dir="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)"
+    # Optional clone override: an absolute vault: path in config.yaml.
+    if [ -f "$base_dir/config.yaml" ]; then
+      cfg_vault="$(grep -E '^vault:' "$base_dir/config.yaml" | sed 's/^vault:[[:space:]]*//')"
+      case "$cfg_vault" in
+        /*) [ -f "$cfg_vault/MEMORY.md" ] && { printf '%s\n' "$cfg_vault"; exit 0; } ;;
+      esac
+    fi
+    # Otherwise the clone's own ./vault, if it exists (it's gitignored, so this
+    # is only present if the user scaffolded one in place).
+    if [ -f "$base_dir/vault/MEMORY.md" ]; then
+      printf '%s\n' "$base_dir/vault"
       exit 0
     fi
     ;;

@@ -36,8 +36,13 @@ the model never changes, but the environment it runs in gets sharper.
 
 4. Mark each applied proposal `status: applied` in its Reflections note.
 
-5. Commit everything:
-   `git add -A && git commit -m "feat: apply self-improvement — <summary>"`.
+5. Commit — memory and code live in different repos now:
+   - Skill/`CLAUDE.md`/`config.yaml` edits (this repo):
+     `git add -A && git commit -m "feat: apply self-improvement — <summary>"`.
+   - The `MEMORY.md` standing-lessons edit lands in the vault (external; see
+     CLAUDE.md → "Resolving the vault path"). Commit it in the vault's own git
+     if it has one:
+     `git -C <base> add -A && git -C <base> commit -m "chore: memory update — standing lessons"`.
    Self-modification without a reviewable diff is forbidden.
 
 6. Report: what you applied, what you rejected, what you held — one line each.

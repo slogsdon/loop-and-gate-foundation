@@ -234,21 +234,23 @@ loop-and-gate-foundation/
 ├── ARCHITECTURE.md        # this file
 ├── CLAUDE.md              # standing behavior: session protocol, memory map,
 │                          #   guardrails — loaded by every session in this dir
-├── config.yaml            # vault path (read by the SessionStart hook)
+├── config.yaml            # optional clone-only vault override (see vault-path.sh)
 ├── .claude/
-│   ├── settings.json      # registers the SessionStart hook
+│   ├── settings.json      # registers the SessionStart hook (clone path)
 │   └── skills/            # the skills, discovered automatically on folder-open
 │       └── */SKILL.md
-├── vault/                 # the Obsidian vault (open it in Obsidian directly)
-│   ├── Inbox/             # raw phone captures, cleared by inbox-triage
-│   ├── Profiles/          # voice + taste, built by profile-interview
-│   ├── Daily/             # episodic memory — append-only session log
-│   ├── Knowledge/         # semantic memory — one topic per note
-│   ├── Reflections/       # improvement signals — proposals live here
+├── hooks/hooks.json       # registers the SessionStart hook (plugin path)
+├── vault.example/         # committed EXAMPLE of the structure. The real vault
+│   ├── Inbox/             #   lives OUTSIDE the repo — placed by the setup skill,
+│   ├── Profiles/          #   resolved via ~/.config/loop-and-gate/vault. The
+│   ├── Daily/             #   repo's own vault/ is gitignored.
+│   ├── Knowledge/
+│   ├── Reflections/
 │   └── MEMORY.md          # the always-loaded index
 └── scripts/
-    ├── setup.sh                # optional: git init + prereq checks (terminal)
-    └── session-start-hook.sh   # injects working memory into every session
+    ├── setup.sh               # scaffolds a vault + records its path
+    ├── vault-path.sh          # single source of truth for the vault base path
+    └── session-start-hook.sh  # injects working memory into every session
 ```
 
 Skills live in `.claude/skills/` as real files — where Claude Code discovers them

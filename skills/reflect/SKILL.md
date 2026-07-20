@@ -55,8 +55,11 @@ or is written as vague praise, breaks the whole loop.
    update its one-line status, and add any Knowledge index lines queued by
    capture. Stale goals rot the index.
 
-4. **Commit memory** — `git add vault/ && git commit -m "chore: memory update — <short summary>"`.
-   Every session leaves an auditable trail.
+4. **Commit memory** — commit in the vault's own git repo if it has one:
+   `git -C <base> add -A && git -C <base> commit -m "chore: memory update — <short summary>"`
+   (`<base>` = `cat ~/.config/loop-and-gate/vault`, or the clone's `vault/`).
+   If the vault isn't under git, skip. Every session that can leaves an
+   auditable trail.
 
 ## Rules
 
