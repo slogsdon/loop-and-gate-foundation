@@ -23,7 +23,8 @@ A self-improving agent loop that uses an Obsidian vault as persistent memory.
 One **interactive Claude Code session = one iteration** (the "Ralph loop"
 pattern — Geoffrey Huntley / Ryan Carson / Addy Osmani — adapted to
 interactive use). Open Claude Code in this folder: the SessionStart hook
-loads memory and `CLAUDE.md` enforces the protocol — no launcher needed:
+loads memory and the operating rules (`CLAUDE.md`) enforce the protocol — no
+launcher needed:
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -233,13 +234,14 @@ loop-and-gate-foundation/
 ├── README.md              # beginner-facing intro + quickstart
 ├── ARCHITECTURE.md        # this file
 ├── CLAUDE.md              # standing behavior: session protocol, memory map,
-│                          #   guardrails — loaded by every session in this dir
+│                          #   guardrails — auto-loaded on a clone; injected by
+│                          #   the inject-operating-rules.sh hook on a plugin install
 ├── config.yaml            # optional clone-only vault override (see vault-path.sh)
 ├── .claude/
-│   ├── settings.json      # registers the SessionStart hook (clone path)
+│   ├── settings.json      # registers the two SessionStart hooks (clone path)
 │   └── skills/            # the skills, discovered automatically on folder-open
 │       └── */SKILL.md
-├── hooks/hooks.json       # registers the SessionStart hook (plugin path)
+├── hooks/hooks.json       # registers the two SessionStart hooks (plugin path)
 ├── vault.example/         # committed EXAMPLE of the structure. The real vault
 │   ├── Inbox/             #   lives OUTSIDE the repo — placed by the setup skill,
 │   ├── Profiles/          #   resolved via ~/.config/loop-and-gate/vault. The
@@ -248,9 +250,10 @@ loop-and-gate-foundation/
 │   ├── Reflections/
 │   └── MEMORY.md          # the always-loaded index
 └── scripts/
-    ├── setup.sh               # scaffolds a vault + records its path
-    ├── vault-path.sh          # single source of truth for the vault base path
-    └── session-start-hook.sh  # injects working memory into every session
+    ├── setup.sh                   # scaffolds a vault + records its path
+    ├── vault-path.sh              # single source of truth for the vault base path
+    ├── session-start-hook.sh      # injects working memory into every session
+    └── inject-operating-rules.sh  # injects CLAUDE.md on the plugin path (2nd hook)
 ```
 
 Skills live in `.claude/skills/` as real files — where Claude Code discovers them

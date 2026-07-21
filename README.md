@@ -73,7 +73,7 @@ procedure. This repo's skills:
 
 **The loop** ties it together: one interactive Claude Code session = one
 iteration. Open Claude Code in this folder and the SessionStart hook loads
-memory while `CLAUDE.md` runs the protocol (load memory → work → save
+memory, and the operating rules in `CLAUDE.md` run the protocol (load memory → work → save
 learnings → reflect). When you're done, exit. Next time, a fresh session
 picks up where the *files* left off. Only the memory files carry over between
 sessions — that's deliberate, it keeps the agent focused and reliable.
@@ -161,7 +161,10 @@ Enable it, then run the **`setup` skill** once to place your vault — just ask
 *"set up my vault"* (or `/setup`). Unlike the clone path, you have no
 `scripts/setup.sh` in your working directory here; the script ships in the
 plugin cache, and the skill finds and runs it for you. Then start any session —
-the SessionStart hook and all nine skills load globally.
+the SessionStart hook and all nine skills load globally. On this path the hook
+also injects the operating rules (`CLAUDE.md`) into every session: a plugin's
+`CLAUDE.md` isn't on Claude Code's load path, so unlike a clone it can't
+auto-load — a second SessionStart hook delivers it instead.
 
 **One limitation, by platform.** The `improve` skill rewrites its own skills as
 it learns. That self-editing only persists in a **clone**, where the skills are
@@ -174,7 +177,7 @@ plugin if you just want to run it everywhere.
 ## Usage
 
 ```bash
-# Start a session — the hook loads memory, CLAUDE.md runs the protocol
+# Start a session — the hook loads memory + the operating rules that run the protocol
 claude
 ```
 
@@ -204,7 +207,7 @@ claude
 ```
 
 (Or open the folder in the Claude desktop app or your IDE — same result;
-the hook and `CLAUDE.md` do the priming.) It's a normal interactive session —
+the hook does the priming — memory plus the operating rules.) It's a normal interactive session —
 you can talk to it, steer it, interrupt it. What happens:
 
 1. A session-start hook injects `vault/MEMORY.md` (nearly empty right now)
@@ -228,7 +231,7 @@ give it a goal — or none:
 ```
 
 With no goal, it picks up open items from the last daily note. The
-SessionStart hook loads memory and `CLAUDE.md` runs the protocol either way.
+SessionStart hook loads memory and the operating rules run the protocol either way.
 
 One session = one iteration of the loop. Work until done or blocked, let it
 reflect, exit. The next session starts fresh and continues from what the
@@ -379,7 +382,9 @@ sessions → better reflections → sharper instructions.
 - `config.yaml` → `vault` — point at a different vault (e.g. your
   real Obsidian vault) once you outgrow the starter one
 - `CLAUDE.md` — the agent's standing behavior rules, edit to taste (the
-  improve skill will also propose edits here over time)
+  improve skill will also propose edits here over time). Auto-loaded on a clone;
+  on a plugin install the SessionStart hook injects it, since a plugin's
+  `CLAUDE.md` isn't on Claude Code's load path
 
 ## FAQ
 
