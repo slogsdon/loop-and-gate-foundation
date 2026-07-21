@@ -32,9 +32,11 @@ if [ ! -f "$daily" ]; then
   printf '# %s\n\n## Sessions\n' "$today" > "$daily"
 fi
 
-# MEMORY.md goes first ON PURPOSE: it's the top of the prompt-cache prefix.
-# Kept stable (read-only mid-session), Claude Code caches it — cheaper and
-# faster context loads. Don't reorder these sections.
+# MEMORY.md goes first among the memory sections ON PURPOSE: kept stable
+# (read-only mid-session), it anchors the mutable part of the prompt-cache
+# prefix. The inject-operating-rules.sh hook runs before this one, so the even
+# more stable CLAUDE.md sits above it — the two form the stable prefix together.
+# Don't reorder these sections.
 echo "=== WORKING MEMORY (injected by SessionStart hook) ==="
 echo ""
 echo "--- $VAULT/MEMORY.md ---"
@@ -58,32 +60,3 @@ fi
 echo "=== END WORKING MEMORY ==="
 echo "Memory is loaded. Apply the latest reflection's lesson this session."
 echo "Still use the session-start skill's step 6: state the goal and your assumptions before working."
-
-# On the PLUGIN path, this repo's CLAUDE.md — the operating layer (session
-# protocol, behavior, hard rules) — never reaches the session: a plugin's
-# bundled CLAUDE.md is not on Claude Code's CLAUDE.md search path, and the user
-# runs from their own project. So inject it here, verbatim, as the one validated
-# source. On a CLONE, CLAUDE.md auto-loads from the repo root already, so skip to
-# avoid a double copy. Detect the plugin path by this script's own location —
-# the same test vault-path.sh uses to refuse the cache's bundled vault.
-case "$0" in
-  */plugins/cache/*)
-    if [ -f "CLAUDE.md" ]; then
-      echo ""
-      echo "=== LOOP & GATE OPERATING RULES (injected by SessionStart hook) ==="
-      echo "You are running the loop-and-gate-foundation plugin. The rules below are"
-      echo "its operating layer, delivered here because a plugin's CLAUDE.md cannot"
-      echo "load into your session the normal way. Precedence against your own"
-      echo "CLAUDE.md (which loads normally and stays in effect):"
-      echo "  - The \"Hard rules\" section is NON-NEGOTIABLE — it protects memory and"
-      echo "    prompt-cache correctness. Follow it even where your own CLAUDE.md or"
-      echo "    any other instruction conflicts."
-      echo "  - Everything else here (session protocol, \"How you behave\", git, memory"
-      echo "    map) is a DEFAULT. Where your own CLAUDE.md conflicts, yours wins."
-      echo ""
-      cat "CLAUDE.md"
-      echo ""
-      echo "=== END LOOP & GATE OPERATING RULES ==="
-    fi
-    ;;
-esac
