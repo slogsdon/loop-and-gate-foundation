@@ -1,6 +1,6 @@
 {
   "name": "loop-and-gate-foundation",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A self-improving agent loop with plain-text Obsidian memory. Skills for capture, reflect, and improve; a SessionStart hook injects working memory each session. The teaching-tier Foundation of the Loop & Gate stack.",
   "author": { "name": "Shane Logsdon", "email": "shane@shanelogsdon.com" },
   "license": "MIT"

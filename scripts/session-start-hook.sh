@@ -37,6 +37,25 @@ fi
 # prefix. The inject-operating-rules.sh hook runs before this one, so the even
 # more stable CLAUDE.md sits above it — the two form the stable prefix together.
 # Don't reorder these sections.
+# 10K guard: this whole block is ONE stdout string, capped at 10,000 chars —
+# over that, Claude Code offloads it to a file and only a preview reaches
+# context, silently truncating MEMORY.md (the index, printed first). MEMORY.md
+# and the reflection are bounded and must survive whole; the daily note grows
+# unbounded via /log, so it's the one we truncate — to its TAIL, since the most
+# recent sessions matter most. A visible marker tells the running agent its
+# memory is partial and where to read the rest. Mirrors the guard in
+# inject-operating-rules.sh, but truncates instead of only warning: the daily
+# note is breached by normal /log use, with no author watching hook stderr.
+# ponytail: tail -c counts bytes, so a cut mid-emoji leaves cosmetic garbage at
+# the top of the kept tail; line-aware tail if that ever matters.
+CAP=9500  # ~500 under the real 10,000 for section chrome + the marker line
+mem_sz=$(wc -c < "$VAULT/MEMORY.md" | tr -d ' ')
+
+latest_reflection=$(ls -1 "$VAULT/Reflections/" 2>/dev/null | sort | tail -1)
+refl_sz=0
+[ -n "$latest_reflection" ] && refl_sz=$(wc -c < "$VAULT/Reflections/$latest_reflection" | tr -d ' ')
+daily_budget=$(( CAP - mem_sz - refl_sz ))
+
 echo "=== WORKING MEMORY (injected by SessionStart hook) ==="
 echo ""
 echo "--- $VAULT/MEMORY.md ---"
@@ -45,12 +64,22 @@ echo ""
 
 latest_daily=$(ls -1 "$VAULT/Daily/" 2>/dev/null | sort | tail -1)
 if [ -n "$latest_daily" ]; then
-  echo "--- latest daily note: $VAULT/Daily/$latest_daily ---"
-  cat "$VAULT/Daily/$latest_daily"
+  dpath="$VAULT/Daily/$latest_daily"
+  dsz=$(wc -c < "$dpath" | tr -d ' ')
+  echo "--- latest daily note: $dpath ---"
+  if [ "$dsz" -le "$daily_budget" ]; then
+    cat "$dpath"
+  elif [ "$daily_budget" -lt 300 ]; then
+    echo "[daily note omitted — MEMORY.md + reflection already near the 10K cap; read it at $dpath]"
+    echo "loop-and-gate: memory block near 10K cap; daily note $latest_daily omitted." >&2
+  else
+    echo "[daily note truncated to last ${daily_budget} chars to fit the 10K SessionStart cap — full note at $dpath]"
+    tail -c "$daily_budget" "$dpath"
+    echo "loop-and-gate: daily note $latest_daily (${dsz}b) truncated to ${daily_budget}b to fit the 10K memory cap." >&2
+  fi
   echo ""
 fi
 
-latest_reflection=$(ls -1 "$VAULT/Reflections/" 2>/dev/null | sort | tail -1)
 if [ -n "$latest_reflection" ]; then
   echo "--- latest reflection: $VAULT/Reflections/$latest_reflection ---"
   cat "$VAULT/Reflections/$latest_reflection"
