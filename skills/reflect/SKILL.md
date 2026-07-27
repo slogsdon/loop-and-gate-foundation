@@ -50,7 +50,7 @@ or is written as vague praise, breaks the whole loop.
    - status: proposed
    ```
 
-3. **Update MEMORY.md** — this is the session's ONE MEMORY.md write (it's
+3. **Update MEMORY.md** — this is the session's FIRST MEMORY.md write (it's
    read-only until now for prompt-cache stability): mark the goal done or
    update its one-line status, and add any Knowledge index lines queued by
    capture. Stale goals rot the index.
