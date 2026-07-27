@@ -67,7 +67,8 @@ procedure. This repo's skills:
 | `inbox-triage` | Clears `vault/Inbox/` — the raw thoughts you dumped from your phone — sorting each into a fact, an idea, a task, or noise, with your confirmation |
 | `profile-interview` | Interviews you to build a voice profile (how you write) and a taste profile (how you judge), so the agent can sound like you and make calls you'd agree with |
 | `reflect` | Ends a session: logs what happened + writes a self-review with one lesson |
-| `improve` | Applies lessons that have come up repeatedly — by editing the skill files themselves |
+| `verify` | Checks a claim using a fresh subagent that never saw the work — it gets the claim and the evidence files, and is asked to disprove it |
+| `improve` | Applies lessons that have come up repeatedly — after `verify` has failed to kill them — by editing the skill files themselves |
 | `loop` | For bigger goals: your session becomes the orchestrator — it breaks the goal into tasks and dispatches a fresh subagent per iteration, verifying each result before it's committed |
 | `add-kits` | Offers to install the rest of the stack — the Build, Grow, and Accountability kits and each one's swappable pipeline — every piece a gated, declinable choice |
 
@@ -397,8 +398,9 @@ it's markdown files getting better.
 markdown. Or `git revert`. Every memory change is a commit.
 
 **Can it mess up its own skills?** The improve skill has guardrails (only
-repeated signals, no gate-weakening, everything committed for your review),
-and `git revert` undoes any bad edit.
+repeated signals, each one then checked by a fresh agent that never saw the work,
+no gate-weakening, everything committed for your review), and `git revert` undoes
+any bad edit.
 
 **Do I need Obsidian?** No — it's a viewer. The system is just files.
 

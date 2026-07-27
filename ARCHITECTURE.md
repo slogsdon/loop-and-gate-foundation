@@ -125,9 +125,13 @@ Research discriminators between "self-improving" and "merely looping":
 
 2. **Write-back must be gated.** Voyager's ablation: remove self-verification
    and performance drops 73%. Unverified self-modification makes agents
-   worse. Here the gate is the **two-strike rule**: reflect can only propose
-   (`status: proposed`). Improve applies only signals that repeated across
-   2+ sessions. One bad session is noise. The same problem twice is a pattern.
+   worse. Here the gate has two halves. The **two-strike rule**: reflect can
+   only propose (`status: proposed`), and improve considers only signals that
+   repeated across 2+ sessions — one bad session is noise, the same problem
+   twice is a pattern. Then the **fresh-context verifier**: a proposal that
+   clears the count still has to survive the verify skill, one subagent that
+   has never seen the work, given the claim and the artifacts and asked to
+   refute it. Counting mentions is not checking.
 
 3. **Improvements must be durable artifacts.** Applied changes land in skill
    files, MEMORY.md, or config — things every future session loads. That's
@@ -146,7 +150,9 @@ session goes badly
   → reflect writes: lesson + proposed change (status: proposed)
   → next sessions hit the same issue → "REPEAT SIGNAL" noted
   → user asks for the improve pass
-  → improve skill: repeat? concrete target? → edit skill/MEMORY/config
+  → improve skill: repeat? concrete target?
+  → verify skill: fresh subagent tries to refute it against the artifacts
+  → survives → edit skill/MEMORY/config
   → status: applied, git commit
   → every future session runs with the sharper instruction
 ```
@@ -155,8 +161,8 @@ session goes badly
 
 The gates above protect a *mature* memory. The harder question a reviewer asked:
 what stops a wrong assumption made in the first few sessions — when MEMORY.md is
-nearly empty — from compounding into a standing lesson? Four things do, and two
-honest gaps remain.
+nearly empty — from compounding into a standing lesson? Five things do, and one
+honest gap remains.
 
 What contains it:
 
@@ -173,14 +179,17 @@ What contains it:
    they are ever committed. Bad work does not reach memory to compound from.
 4. **Every write is a reviewed, reversible commit.** You see each improve diff,
    and any bad entry that slips through is one `git revert` away.
+5. **The repeat itself gets checked.** The second strike is not independent
+   evidence: the SessionStart hook shows every session the latest reflection, so
+   a session can read a wrong lesson and then write the confirmation. Counting
+   those mentions proves nothing. So a proposal that clears the count goes to the
+   verify skill — a subagent with no history, handed the claim and the artifacts
+   (daily notes, vault diffs, the files themselves) and never the Reflections
+   notes, asked to refute rather than confirm. Uncertain returns `drop`. A
+   correlated repeat now has to survive contact with evidence.
 
-The honest gaps:
+The honest gap:
 
-- **The second strike is not independent.** Reflect reads the previous
-  reflection, so once a wrong lesson is written down, the next session can see it
-  and rationalize a confirming second occurrence. Correlated evidence can satisfy
-  a gate meant for independent evidence. (Loop's fresh-context subagents don't
-  carry this; reflect itself does.)
 - **A young memory has leverage.** When MEMORY.md holds three lines, one wrong
   line is a third of the standing context. There is no confidence weight — every
   standing lesson is treated as equally true.
@@ -192,10 +201,8 @@ assumptions before acting, improve passes are interactive, and nothing is applie
 without a diff you approve. The memory-side gates take over as the corpus fills
 and repeats become real signal rather than small-sample noise.
 
-Hardening on the roadmap (not yet implemented): generate the second strike from a
-fresh context blind to the first, so confirmation is independent; tag entries with
-an evidence count and weight injection by it; expire held proposals that never
-repeat.
+Hardening on the roadmap (not yet implemented): tag entries with an evidence count
+and weight injection by it; expire held proposals that never repeat.
 
 ## The skills
 
@@ -210,6 +217,7 @@ followed:
 | inbox-triage | route captured-elsewhere thoughts | vault/Inbox/, MEMORY.md index | Knowledge/ or Daily/ (human-confirmed), empties Inbox/ |
 | profile-interview | learn the user's voice + taste | user, one Q at a time | Profiles/voice-profile.md, Profiles/taste-profile.md |
 | reflect | close the session honestly | session context | Daily/, Reflections/, MEMORY.md goals |
+| verify | kill a claim from a fresh context | the claim + evidence paths only | nothing — returns a verdict |
 | improve | apply repeated signals | Reflections/, MEMORY.md | .claude/skills/, CLAUDE.md, MEMORY.md lessons, config.yaml |
 | loop | orchestrate subagent iterations | MEMORY.md + iteration results | git commits (verified iterations only) |
 
@@ -224,7 +232,8 @@ run sequentially because they share memory files. Only read-only research
 fans out in parallel.
 
 Guardrails encoded in the skills themselves: reflect never applies, improve
-never acts on single occurrences, improve may not weaken its own gates, and
+never acts on single occurrences, improve may not weaken its own gates, verify
+never sees the context it's judging (that one rule is the whole skill), and
 skills stay under ~80 lines (a rule added must displace a rule dropped).
 
 ## Repo structure
