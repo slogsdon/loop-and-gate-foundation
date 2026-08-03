@@ -43,10 +43,12 @@ the human.
    1. Read ONLY the evidence paths above. Do NOT read vault/Reflections/ — a
       claim's own write-up is not evidence for it.
    2. Try to REFUTE the claim. Look for the case where it's false.
-   3. Return exactly these three lines:
+   3. Return exactly these three lines and nothing else — no preamble, no
+      reasoning, no fourth line:
       verdict: keep | drop
-      why: <one sentence>
-      evidence: <the path that decided it>
+      why: <one sentence, 25 words max>
+      evidence: <the one path that decided it — or, when an absence decided
+                 it, `absent: <what you searched, what wasn't there>`>
 
    If the evidence doesn't settle it, return drop.
    ```
@@ -64,5 +66,8 @@ the human.
 - **One verifier per claim.** Batch two claims into one subagent and the strong
   one carries the weak one.
 - **Verify never edits anything.** It returns a verdict. The caller acts on it.
+- **The three lines are the whole return.** A preamble, a fourth line, or a
+  paragraph in `why` is a malformed verdict — ask the same verifier to restate
+  it in format. Never parse prose into a verdict yourself.
 - A claim with no artifact behind it cannot pass here. That's the design, not a
   gap — route it to the human rather than inventing evidence for it.
