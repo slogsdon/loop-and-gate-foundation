@@ -29,8 +29,11 @@ or is written as vague praise, breaks the whole loop.
    - Open: <what the next session should pick up, or "nothing">
    ```
 
-2. **Write the reflection** — create or append to
-   `vault/Reflections/YYYY-MM-DD.md`:
+2. **Write the reflection** — check whether `vault/Reflections/YYYY-MM-DD.md`
+   already exists and APPEND a session section if it does. Never create it
+   blind: the note is per-day but reflections are per-session, and a create
+   against an existing path silently lands as `YYYY-MM-DD 1.md`, hiding a
+   parallel session's reflection from every future improve pass.
 
    ```markdown
    ## Session: <title> (HH:MM)
