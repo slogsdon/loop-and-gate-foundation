@@ -30,7 +30,9 @@ the human.
    so and stop.
 2. **Collect the evidence paths**: the files, vault git diffs, daily notes, or
    test output that would show the claim true or false. Paths only — never the
-   session or the Reflections note that produced the claim.
+   session or the Reflections note that produced the claim. If no artifact
+   could settle it either way — a taste call, a claim about intent — stop here
+   and take it to the human. Don't spend a subagent to be told that.
 3. **Dispatch ONE subagent** (general-purpose) with this brief:
 
    ```
@@ -47,10 +49,15 @@ the human.
       reasoning, no fourth line:
       verdict: keep | drop
       why: <one sentence, 25 words max>
-      evidence: <the one path that decided it — or, when an absence decided
-                 it, `absent: <what you searched, what wasn't there>`>
+      evidence: <the one path that decided it — or `absent: <what you
+                 searched, what wasn't there>` when an absence decided it —
+                 or `unsettled: <why they're silent>` when the artifacts
+                 decide nothing either way>
 
-   If the evidence doesn't settle it, return drop.
+   If the evidence doesn't settle it, return drop — with `unsettled:`, not a
+   path. Citing a path you couldn't decide from reads as if it decided.
+   If a path won't open, return drop with `unsettled: cannot read <path>`. An
+   unreadable path is a broken input, not an absence.
    ```
 
 4. **Report the verdict verbatim** to whoever called you, drop reason included.
@@ -68,6 +75,7 @@ the human.
 - **Verify never edits anything.** It returns a verdict. The caller acts on it.
 - **The three lines are the whole return.** A preamble, a fourth line, or a
   paragraph in `why` is a malformed verdict — ask the same verifier to restate
-  it in format. Never parse prose into a verdict yourself.
+  it in format. Ask once; a second malformed answer is a drop. Never parse
+  prose into a verdict yourself.
 - A claim with no artifact behind it cannot pass here. That's the design, not a
   gap — route it to the human rather than inventing evidence for it.
