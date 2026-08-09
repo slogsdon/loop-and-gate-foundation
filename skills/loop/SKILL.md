@@ -50,10 +50,12 @@ fresh context.
 4. Verify the iteration: check the task's pass/fail criteria yourself
    (read the output, run the check, inspect `git -C <base> diff` of the vault —
    `<base>` = `cat ~/.config/loop-and-gate/vault`, or the clone's `vault/`).
-   - Pass → commit memory in the vault's git if it has one:
-     `git -C <base> add -A && git -C <base> commit -m "chore: loop iteration — <task>"`.
+   - Pass → read `git -C <base> status --porcelain` first, then commit only the
+     paths this iteration wrote (never `add -A` — the vault may auto-sync
+     mid-iteration and sweep someone else's work into your commit):
+     `git -C <base> add <paths> && git -C <base> commit -m "chore: loop iteration — <task>"`.
      Any repo code/skill changes commit separately in this repo.
-   - Fail → `git -C <base> checkout -- .` to discard its memory writes, then
+   - Fail → `git -C <base> checkout -- <those same paths>` to discard its writes, then
      re-dispatch once with your feedback appended to the brief. Two fails →
      stop and ask the user.
 
