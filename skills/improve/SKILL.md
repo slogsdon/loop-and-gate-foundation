@@ -54,22 +54,30 @@ the model never changes, but the environment it runs in gets sharper.
      `git -C <base> add MEMORY.md <any Reflections notes you restatused> && git -C <base> commit -m "chore: memory update — standing lessons"`.
    Self-modification without a reviewable diff is forbidden.
 
-6. Report: what you applied, what you rejected, what you held — one line each.
+6. **Release it — committed is not shipped.** A skill edit lands in a source
+   repo; the agent loads the installed copy. For a plugin skill: bump
+   `.claude-plugin/plugin.json`, push, then `claude plugin marketplace update
+   <marketplace>` and `claude plugin update <plugin>@<marketplace>`. Verify by
+   grepping the NEW cache dir for the text you added — the source file you
+   edited proves nothing about what runs. Skip only if the agent loads the
+   edited file directly.
+
+7. Report: what you applied, what you rejected, what you held — one line each.
+   Say where each applied change is installed, not just committed.
 
 ## Rules
 
-- Never apply a single-occurrence signal. One bad session is noise. The same
-  problem twice is a pattern. (This gate is what separates self-improvement
-  from self-thrashing.)
+- Never apply a single-occurrence signal. One bad session is noise; the same
+  problem twice is a pattern. This gate is what stops self-thrashing.
 - Never apply a proposal the count alone approved. Two strikes get it to the
   verifier; the verifier decides. Counting mentions of a claim is not the same
   as checking it.
 - Walk the user through each applied diff — improvement passes run
   interactively so the human stays in the review loop.
 - MEMORY.md updates come LAST — after all skill/CLAUDE.md/config edits,
-  immediately before the commit. MEMORY.md is the session's prompt-cache
-  prefix (injected first by the hook); writing it mid-session invalidates
-  the cache, raising cost and slowing context load.
+  immediately before the commit; it is the prompt-cache prefix (see CLAUDE.md).
+- An applied proposal that was never installed is a held proposal with extra
+  steps. Two passes in a row have shipped fixes the running agent never saw.
 - Skills stay atomic: if a proposal would give a skill a second job, reject
   it and propose a new skill in your report instead.
 - Do not edit this skill (improve) to weaken its own gates.
