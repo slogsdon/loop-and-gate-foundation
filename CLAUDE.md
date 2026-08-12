@@ -59,9 +59,11 @@ no base resolves, the vault isn't set up — run the `setup` skill.
 - Memory lives in the resolved vault (see "Resolving the vault path"), not in
   this repo — the repo's `vault/` is gitignored. After reflect or improve writes
   memory, commit it in the VAULT's own git repo if it has one:
-  `git -C <base> add -A && git -C <base> commit -m "chore: memory update — <summary>"`
+  `git -C <base> add <the paths you wrote> && git -C <base> commit -m "chore: memory update — <summary>"`
   (`<base>` = `cat ~/.config/loop-and-gate/vault`, or the clone's `vault/`). If
-  the vault isn't under git, skip — nothing to commit here.
+  the vault isn't under git, skip — nothing to commit here. Enumerate the paths;
+  never `add -A`, which commits a parallel session's or an auto-sync's writes
+  under your message.
 - Skill, config, and doc edits (including improve's self-edits) commit in THIS
   repo: `feat: apply self-improvement — <summary>`.
 - Never push unless asked. Never rewrite history.

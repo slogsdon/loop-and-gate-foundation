@@ -58,9 +58,13 @@ or is written as vague praise, breaks the whole loop.
    update its one-line status, and add any Knowledge index lines queued by
    capture. Stale goals rot the index.
 
-4. **Commit memory** — commit in the vault's own git repo if it has one:
-   `git -C <base> add -A && git -C <base> commit -m "chore: memory update — <short summary>"`
+4. **Commit memory** — commit in the vault's own git repo if it has one
    (`<base>` = `cat ~/.config/loop-and-gate/vault`, or the clone's `vault/`).
+   Stage the paths this session actually wrote — `Daily/YYYY-MM-DD.md`,
+   `Reflections/YYYY-MM-DD.md`, `MEMORY.md`, plus any capture targets — never
+   `add -A`, which sweeps a parallel session's or an auto-sync's work in under
+   your message:
+   `git -C <base> add <those paths> && git -C <base> commit -m "chore: memory update — <short summary>"`
    If the vault isn't under git, skip. Every session that can leaves an
    auditable trail.
 
