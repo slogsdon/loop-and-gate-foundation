@@ -19,7 +19,7 @@ VAULT="$("$(dirname "$0")/vault-path.sh")"
 if [ -z "$VAULT" ] || [ ! -f "$VAULT/MEMORY.md" ]; then
   echo "=== Loop & Gate Foundation: no vault configured yet ==="
   echo "Run the setup skill once to place your memory vault:"
-  echo "  ask \"set up my vault\", or run /setup"
+  echo "  ask \"set up my vault\", or run /setup (Claude Code) or /skill:setup (pi)"
   echo "Then start a new session — memory will load here automatically."
   exit 0
 fi
