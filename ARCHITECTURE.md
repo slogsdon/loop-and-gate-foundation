@@ -81,7 +81,9 @@ tiers as plain markdown in an Obsidian vault:
 (`.claude/settings.json` → `scripts/session-start-hook.sh`) injects
 MEMORY.md + the latest daily note + the latest reflection into every
 session's context before the model does anything. A skill the model must
-remember to invoke can be skipped. A hook cannot. The session-start skill
+remember to invoke can be skipped. A hook cannot. On pi, which has no hooks,
+`pi/extension.ts` runs the same two scripts once per session and appends their
+output to the system prompt, byte-identical every turn. The session-start skill
 remains for the protocol's judgment half (state goal + assumptions) and as
 manual fallback.
 
@@ -251,6 +253,9 @@ loop-and-gate-foundation/
 │   └── skills/            # the skills, discovered automatically on folder-open
 │       └── */SKILL.md
 ├── hooks/hooks.json       # registers the two SessionStart hooks (plugin path)
+├── package.json           # pi package manifest (extension + skills)
+├── pi/extension.ts        # pi's stand-in for the two hooks; exports LOOP_GATE_ROOT;
+│                          #   offers pi-subagents + ask_user_question once
 ├── vault.example/         # committed EXAMPLE of the structure. The real vault
 │   ├── Inbox/             #   lives OUTSIDE the repo — placed by the setup skill,
 │   ├── Profiles/          #   resolved via ~/.config/loop-and-gate/vault. The

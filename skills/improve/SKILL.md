@@ -30,7 +30,7 @@ the model never changes, but the environment it runs in gets sharper.
     hook shows each session the last reflection before it writes its own.
 
 3. Apply accepted changes:
-   - `.claude/skills/*/SKILL.md` → edit the skill. Add the rule where it belongs in
+   - `skills/*/SKILL.md` → edit the skill. Add the rule where it belongs in
      the existing structure. Don't append a "lessons" dump at the bottom.
      Keep each skill under ~80 lines — if a new rule won't fit, an old rule
      must be dropped or merged. Never change a skill's one job.
@@ -56,9 +56,11 @@ the model never changes, but the environment it runs in gets sharper.
 
 6. **Release it — committed is not shipped.** A skill edit lands in a source
    repo; the agent loads the installed copy. For a plugin skill: bump
-   `.claude-plugin/plugin.json`, push, then `claude plugin marketplace update
-   <marketplace>` and `claude plugin update <plugin>@<marketplace>`. Verify by
-   grepping the NEW cache dir for the text you added — the source file you
+   `.claude-plugin/plugin.json` and `package.json`, push, then `claude plugin
+   marketplace update <marketplace>` and `claude plugin update
+   <plugin>@<marketplace>` (Claude Code) or `pi update git:github.com/<repo>`
+   (pi). Verify by grepping the NEW installed copy (the plugin cache, or
+   `~/.pi/agent/git/…`) for the text you added — the source file you
    edited proves nothing about what runs. Skip only if the agent loads the
    edited file directly.
 

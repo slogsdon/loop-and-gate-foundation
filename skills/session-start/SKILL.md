@@ -7,13 +7,14 @@ description: Load working memory at the start of every agent session. Use FIRST 
 
 One job: load the right memory into context, cheaply. Nothing else.
 
-A SessionStart hook (`scripts/session-start-hook.sh`) normally injects
-memory automatically — look for a `=== WORKING MEMORY ===` block in your
-context. If it's there, skip straight to step 6. Steps 1-5 are the manual
-fallback (hook not installed, or running outside Claude Code).
+A SessionStart hook (`scripts/session-start-hook.sh`) — or on pi, the
+Foundation extension running the same script — normally injects memory
+automatically — look for a `=== WORKING MEMORY ===` block in your context. If
+it's there, skip straight to step 6. Steps 1-5 are the manual fallback (hook
+not installed, or a harness with neither).
 
 The hook injects MEMORY.md FIRST on purpose: it sits at the top of the
-prompt-cache prefix, so Claude Code caches it across the session. Changing
+prompt-cache prefix, so the harness caches it across the session. Changing
 MEMORY.md after the hook fires defeats this — it stays read-only until
 session end (see CLAUDE.md hard rules).
 

@@ -167,6 +167,36 @@ also injects the operating rules (`CLAUDE.md`) into every session: a plugin's
 `CLAUDE.md` isn't on Claude Code's load path, so unlike a clone it can't
 auto-load — a second SessionStart hook delivers it instead.
 
+### Or install in pi
+
+Using the [pi](https://pi.dev) agent harness (0.86.1 or later) instead of Claude
+Code:
+
+```bash
+pi install git:github.com/slogsdon/loop-and-gate-foundation
+```
+
+Then run `/skill:setup` once to place your vault. Everything the Claude Code
+plugin does comes with it:
+
+- **Skills.** All nine skills load, and each one is also a `/skill:<name>` command.
+- **Extension.** `pi/extension.ts` runs the same two hook scripts once per
+  session and appends the operating rules and working memory to the system
+  prompt. It doesn't inject them as messages. The appended block is
+  byte-identical on every turn, so the cached prefix survives the whole session.
+- **Companion tools.** On first launch it offers, once, to install two
+  community packages that stand in for Claude Code built-ins:
+  [pi-subagents](https://www.npmjs.com/package/pi-subagents) provides the
+  `subagent` tool that `loop`, `verify` and `improve` dispatch, and
+  [rpiv-ask-user-question](https://www.npmjs.com/package/@juicesharp/rpiv-ask-user-question)
+  provides the `ask_user_question` tool behind the `setup` and `add-kits` gates.
+  If you already have them, it skips the offer. They install as separate
+  packages rather than bundled copies because pi won't start with two packages
+  registering the same tool. Declining is remembered in
+  `~/.config/loop-and-gate/pi-deps-declined`; delete that file to be asked again.
+
+A clone works in pi too: run `pi` in the repo, and pi loads `CLAUDE.md` natively.
+
 **One limitation, by platform.** The `improve` skill rewrites its own skills as
 it learns. That self-editing only persists in a **clone**, where the skills are
 your working copy. Installed as a **plugin**, skills live in a read-only cache,

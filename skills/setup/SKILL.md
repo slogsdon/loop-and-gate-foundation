@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Place and scaffold the memory vault on first run. Use once right after installing — as a plugin (ask "set up my vault" or /setup) or a fresh clone — or whenever the SessionStart hook reports no vault is configured. Prompts for the location, then records the path so memory loads every session after.
+description: Place and scaffold the memory vault on first run. Use once right after installing — as a plugin (ask "set up my vault", /setup, or /skill:setup on pi) or a fresh clone — or whenever the SessionStart hook reports no vault is configured. Prompts for the location, then records the path so memory loads every session after.
 ---
 
 # Setup
@@ -18,11 +18,13 @@ script.
 
 ## Steps
 
-1. Locate the bundled setup script. Prefer the working copy; fall back to the
-   plugin cache (the version-pinned path a plugin user can't easily type):
+1. Locate the bundled setup script. On pi the Foundation extension exports
+   `LOOP_GATE_ROOT`; otherwise prefer the working copy, then fall back to the
+   Claude Code plugin cache (the version-pinned path a plugin user can't easily
+   type):
 
    ```bash
-   script="./scripts/setup.sh"
+   script="${LOOP_GATE_ROOT:-.}/scripts/setup.sh"
    if [ ! -x "$script" ]; then
      script=$(find "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/plugins" \
        -path '*loop-and-gate-foundation*/scripts/setup.sh' 2>/dev/null | sort -V | tail -1)
@@ -34,8 +36,8 @@ script.
    what a vault contains.
 
 2. **Ask where the vault should live — this is a gate, don't decide it for the
-   user.** Check the OS first (`uname`). Use the AskUserQuestion tool with a
-   location choice:
+   user.** Check the OS first (`uname`). Ask with AskUserQuestion (Claude Code) or
+   `ask_user_question` (pi), as a location choice:
    - **On macOS**, put the Obsidian iCloud folder first and mark it
      *(Recommended)* — `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/SecondBrain`
      syncs the vault to Obsidian on iPhone/iPad for free. Silently adopting a
@@ -62,7 +64,7 @@ script.
 - Never reimplement the scaffold logic here. This skill's only job is to ask the
   location and run `setup.sh`. Two copies of the folder layout would drift.
 - Never pick the location silently. The location is the user's call — that is
-  the whole reason this skill uses AskUserQuestion instead of the script's
+  the whole reason this skill asks the user instead of trusting the script's
   auto-detection.
 - Run it once. It's a first-run step, not a session ritual.
 - Keep `setup.sh`'s git gate: the script *prints* the vault git-init command
