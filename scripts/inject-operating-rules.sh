@@ -20,11 +20,15 @@ cd "$(dirname "$0")/.."
 
 # Plugin path only. Detect by this script's own location — confirmed at runtime
 # that Claude Code invokes the hook via a path under */plugins/cache/*, while a
-# clone runs it from the project dir. Same test vault-path.sh uses.
-case "$0" in
-  */plugins/cache/*) ;;
-  *) exit 0 ;;
-esac
+# clone runs it from the project dir. Same test vault-path.sh uses. --force skips
+# the test: the pi extension (pi/extension.ts) passes it after doing its own
+# clone check, since pi loads a clone's CLAUDE.md natively too.
+if [ "${1:-}" != "--force" ]; then
+  case "$0" in
+    */plugins/cache/*) ;;
+    *) exit 0 ;;
+  esac
+fi
 
 [ -f "CLAUDE.md" ] || exit 0
 
@@ -39,16 +43,16 @@ echo "=== LOOP & GATE OPERATING RULES (injected by SessionStart hook) ==="
 echo "You are running the loop-and-gate-foundation plugin. The rules below are"
 echo "its operating layer, delivered here because a plugin's CLAUDE.md cannot"
 echo "load into your session the normal way. Precedence against your own"
-echo "CLAUDE.md (which loads normally and stays in effect):"
+echo "CLAUDE.md/AGENTS.md (which loads normally and stays in effect):"
 echo "  - The \"Hard rules\" section is NON-NEGOTIABLE — it protects memory and"
 echo "    prompt-cache correctness. Follow it even where your own CLAUDE.md or"
 echo "    any other instruction conflicts."
 echo "  - Everything else here (session protocol, \"How you behave\", git, memory"
-echo "    map) is a DEFAULT. Where your own CLAUDE.md conflicts, yours wins."
+echo "    map) is a DEFAULT. Where your own CLAUDE.md/AGENTS.md conflicts, yours wins."
 echo ""
 cat "CLAUDE.md"
 echo ""
 echo "Precedence recap: the \"Hard rules\" above are absolute. Everything else here"
-echo "is a default — your own CLAUDE.md, loaded earlier this session, overrides on"
+echo "is a default — your own CLAUDE.md/AGENTS.md, loaded earlier this session, overrides on"
 echo "conflict."
 echo "=== END LOOP & GATE OPERATING RULES ==="

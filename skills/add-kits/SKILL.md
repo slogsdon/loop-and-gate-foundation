@@ -28,7 +28,7 @@ the offer on its own.
    *different* plugin repo's directory will falsely resolve to that repo:
 
    ```bash
-   root="."
+   root="${LOOP_GATE_ROOT:-.}"   # pi: exported by the Foundation extension
    if [ ! -f "$root/skills/add-kits/kits.json" ]; then
      kf=$(find "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/plugins" \
        -path '*loop-and-gate-foundation*/skills/add-kits/kits.json' 2>/dev/null | sort -V | tail -1)
@@ -52,13 +52,15 @@ the offer on its own.
 3. **See what's already installed** so the offer doesn't re-list it:
 
    ```bash
-   claude plugin list --json
+   claude plugin list --json   # Claude Code
+   pi list                     # pi — installed sources, e.g. git:github.com/<repo>
    ```
 
    Mark kits already present as installed; drop them from the choices (or show
    them greyed as "already installed").
 
-4. **Gate 1 — which kits?** Use AskUserQuestion (`multiSelect: true`) listing the
+4. **Gate 1 — which kits?** Ask with AskUserQuestion (Claude Code) or
+   `ask_user_question` (pi), `multiSelect: true`, listing the
    not-yet-installed kits, each with its one-line description. The human picks
    zero or more. Picking none is valid — and, crucially, does **not** end the
    skill: a user with every kit already installed can still be missing pipelines,
@@ -69,48 +71,54 @@ the offer on its own.
    name (from step 2), one command per kit:
 
    ```bash
-   claude plugin install <kit-plugin-name>@<marketplace-name>
+   claude plugin install <kit-plugin-name>@<marketplace-name>   # Claude Code
+   pi install git:github.com/<source.repo>                      # pi — the entry's source.repo
    ```
 
 6. **Gate 2 — the pipeline, per installed kit that's missing one.** Consider
    every kit that is now installed — the ones just chosen **and** the ones that
    were already there. For each that has a `kits.json` entry, split its tools into
    **core** (no `optional` flag) and **optional augments** (`"optional": true`),
-   and drop from each list whatever's already installed (from step 3's
-   `claude plugin list --json`). Then, per kit:
+   and drop from each list whatever's already installed (from step 3's list).
+   **On pi, a tool with no `pi` field isn't offered** — it has no pi build. Then,
+   per kit:
 
-   - **Core pipeline** — if any core tool is missing, one AskUserQuestion offer to
+   - **Core pipeline** — if any core tool is missing, one ask-tool offer to
      install the core set (install-all / skip). **Label it swappable**: name the
      tools and make clear the sensible default for someone who already has their
      own brainstorm/plan/build/test/review or design/writing tools is to decline —
      the kit works either way.
-   - **Optional augments** — if any augment is missing, a *separate* AskUserQuestion
+   - **Optional augments** — if any augment is missing, a *separate* ask-tool question
      (`multiSelect: true`) listing each augment with a one-line "what it adds", so
      the human picks any subset (default none). These are extras that run alongside
-     the core, not gate-fillers, so none is a perfectly good answer. AskUserQuestion
-     allows at most four options per question — if a kit ever lists more than four
+     the core, not gate-fillers, so none is a perfectly good answer. Both ask
+     tools allow at most four options per question — if a kit ever lists more than four
      missing augments, chunk them across additional questions.
 
    For every tool the human chose, add its marketplace then install it (add is safe
    to re-run):
 
    ```bash
+   # Claude Code
    claude plugin marketplace add <source>
    claude plugin install <plugin>@<marketplace>
+   # pi — the tool's `pi` field
+   pi install <pi>
    ```
 
    A kit with no `kits.json` entry, or whose pipeline (core and augments) is already
    fully installed, gets no question — skip it silently.
 
 7. **Report and reload.** List exactly what was installed (kits and any pipeline
-   tools), then tell the user to run `/reload-plugins` (or restart the session)
-   so the new skills load now. Name the entry points they just gained — e.g.
-   `/loop-and-gate` for the Build Kit, `/grow-and-gate` for the Grow Kit.
+   tools), then tell the user to run `/reload-plugins` (Claude Code) or `/reload`
+   (pi), or restart the session, so the new skills load now. Name the entry points
+   they just gained — e.g. `/loop-and-gate` for the Build Kit, `/grow-and-gate` for
+   the Grow Kit (`/skill:loop-and-gate`, `/skill:grow-and-gate` on pi).
 
 ## Rules
 
 - **Never install without the gate.** Every kit and every pipeline is a
-  human-picked choice via AskUserQuestion. This skill's reason to exist is that
+  human-picked choice through the ask tool. This skill's reason to exist is that
   these are offers, not dependencies.
 - **The pipeline is always declinable, and framed that way.** Never present the
   build/grow tools as required. They are the disposable appendix; declining in

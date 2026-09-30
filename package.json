@@ -1,0 +1,23 @@
+{
+  "name": "loop-and-gate-foundation",
+  "version": "0.5.0",
+  "description": "A self-improving agent loop with plain-text Obsidian memory. Skills for capture, reflect, and improve; working memory injected every session. The teaching-tier Foundation of the Loop & Gate stack.",
+  "keywords": [
+    "pi-package"
+  ],
+  "author": "Shane Logsdon <shane@shanelogsdon.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slogsdon/loop-and-gate-foundation.git"
+  },
+  "private": true,
+  "pi": {
+    "extensions": [
+      "./pi/extension.ts"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  }
+}

@@ -4,8 +4,8 @@ This is the path for someone who has never opened a terminal and doesn't want to
 Everything here happens inside the app — a couple of clicks and one pasted command,
 no command line. About 15 minutes, most of it one-time.
 
-Prefer the terminal? The [README](README.md) has the `git clone` + `claude` path.
-Both end in the same place.
+Prefer the terminal? The [README](README.md) has the `git clone` + `claude` path,
+and the one-line `pi install` for the pi harness. All end in the same place.
 
 ## What you need
 

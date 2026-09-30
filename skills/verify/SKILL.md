@@ -33,7 +33,9 @@ the human.
    session or the Reflections note that produced the claim. If no artifact
    could settle it either way — a taste call, a claim about intent — stop here
    and take it to the human. Don't spend a subagent to be told that.
-3. **Dispatch ONE subagent** (general-purpose) with this brief:
+3. **Dispatch ONE fresh-context subagent** — the Agent tool, general-purpose
+   (Claude Code), or the `subagent` tool with `agent: "oracle"` and
+   `context: "fresh"` (pi) — with this brief:
 
    ```
    You are a skeptic with no history here. You have not seen the work you are

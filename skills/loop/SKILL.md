@@ -28,7 +28,9 @@ fresh context.
    in one run, with a pass/fail check you can state up front. Show the user
    the task list. Adjust if they object.
 
-3. For each task, dispatch ONE subagent (general-purpose) with this brief:
+3. For each task, dispatch ONE fresh-context subagent — the Agent tool, general-purpose (Claude Code), or the `subagent` tool with
+   `agent: "worker"` and `context: "fresh"` (pi) —
+   with this brief:
 
    ```
    You are one iteration of an agent loop in <repo path>.

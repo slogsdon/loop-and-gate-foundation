@@ -21,7 +21,8 @@ fi
 # No recorded path. Fall back ONLY for a clone — detect a plugin install by this
 # script's own location and refuse to adopt its bundled vault.
 case "$0" in
-  */plugins/cache/*) : ;;  # plugin install: no local fallback, force setup
+  # plugin install (Claude Code cache, pi git/npm install): no local fallback, force setup
+  */plugins/cache/*|*/.pi/agent/git/*|*/.pi/git/*|*/node_modules/*) : ;;
   *)
     base_dir="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)"
     # Optional clone override: an absolute vault: path in config.yaml.
