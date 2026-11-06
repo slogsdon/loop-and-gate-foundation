@@ -1,0 +1,8 @@
+{
+  "slug": "loop-and-gate",
+  "name": "Loop & Gate",
+  "origin": "https://projects.logsdon.io",
+  "description": "A Foundation layer that gives an AI agent a memory, plus three kits that stop the loop at the points where a human has to decide.",
+  "lastmod": "2026-09-30",
+  "source": "https://github.com/slogsdon/loop-and-gate-foundation"
+}
