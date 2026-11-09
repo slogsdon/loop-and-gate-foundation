@@ -45,11 +45,9 @@ npx --no-install cf build --mode microsite-production
 
 ## Pages
 
-`scripts/build-site.ts` discovers canonical pages flat from `pages/` — `index.php`
-→ `/`, `name.php` → `/name/` — and asserts one HTML file per page plus the 404. It
-does **not** walk subdirectories, so a nested `pages/kits/build.php` would be
-skipped by the sitemap and break the artifact count. The kit pages are therefore
-flat files with prefixed names:
+`scripts/build-site.ts` discovers canonical pages recursively from `pages/` —
+`index.php` → `/`, `kits/build.php` → `/kits/build/` — and asserts one HTML file per
+page plus the 404:
 
 | File | URL |
 |---|---|
@@ -132,8 +130,8 @@ linked from the kit pages; no public Markdown or download exists to migrate.
   `SITE_NOINDEX=1`).
 - Every old-to-new mapping in `MIGRATION.md` §1 and §6 resolves to a page that
   exists in `dist/loop-and-gate/`.
-- Title uniqueness and the "contains the project name" rule, in the ampersand-free
-  form described above.
+- Title uniqueness and the "contains the project name" rule, compared against the
+  HTML-escaped name (`Loop &amp; Gate`).
 
 ## Not verified here (Unverified)
 
